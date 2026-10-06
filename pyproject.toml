@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "medsystem1"
+version = "0.1.0"
+description = "Local-first safety and routing layer for medical AI"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "MedSystem1 contributors" }]
+keywords = ["medical-ai", "agent", "safety", "routing", "local-first"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.urls]
+Repository = "https://github.com/qiqilong01-wq/MedSystem1"
+Issues = "https://github.com/qiqilong01-wq/MedSystem1/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/medsystem1"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
