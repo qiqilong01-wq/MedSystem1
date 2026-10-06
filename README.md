@@ -23,7 +23,7 @@ Clinical input → ExtractionProvider → Normalized Clinical State
 Python 3.10+:
 
 ```bash
-pip install -e .
+pip install medsystem1
 ```
 
 ```python
@@ -79,6 +79,8 @@ python examples/ophthalmology_zh.py
 
 ## Development
 
+For a source checkout:
+
 ```bash
 pip install -e ".[dev]"
 ruff check .
@@ -93,6 +95,8 @@ pytest -q
 4. Add audit events and provider conformance tests.
 5. Validate integrations before broader clinical workflows.
 
-## License
+## License and third-party components
 
-Apache License 2.0. Third-party models, datasets, and adapters may carry separate licenses and must be reviewed independently.
+MedSystem1 is licensed under Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+
+Third-party SDKs, models, datasets, weights, and remote services can carry separate terms. MedSystem1 core does not bundle OpenMed or Strands Decider model assets. See [THIRD_PARTY.md](THIRD_PARTY.md).
