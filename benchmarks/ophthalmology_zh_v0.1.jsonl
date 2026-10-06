@@ -1,0 +1,5 @@
+{"id":"oph-001","text":"患者诉左眼视物模糊半年。","task":"extract_laterality","expected":{"laterality":"left"},"synthetic":true}
+{"id":"oph-002","text":"右眼眼压28 mmHg，左眼16 mmHg。","task":"extract_iop","expected":{"right_iop_mmHg":28,"left_iop_mmHg":16},"synthetic":true}
+{"id":"oph-003","text":"否认眼痛及头痛。","task":"extract_negation","expected":{"eye_pain":false,"headache":false},"synthetic":true}
+{"id":"oph-004","text":"OCT提示黄斑前膜。","task":"extract_exam","expected":{"exam":"OCT","finding":"epiretinal_membrane"},"synthetic":true}
+{"id":"oph-005","text":"建议调整降眼压治疗方案。","task":"route_capability","expected":{"capability":"change_treatment","minimum_action":"HUMAN_REVIEW"},"synthetic":true}
