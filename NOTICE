@@ -1,0 +1,9 @@
+MedSystem1
+Copyright 2026 MedSystem1 contributors
+
+This product is licensed under the Apache License, Version 2.0.
+
+MedSystem1 provides optional adapter interfaces for third-party projects.
+No OpenMed or Strands Decider source code, model weights, datasets, or other
+third-party assets are bundled in the MedSystem1 core distribution as of v0.1.0.
+See THIRD_PARTY.md for integration and licensing guidance.
