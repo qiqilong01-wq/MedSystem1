@@ -1,4 +1,4 @@
-# API migration — 0.1.1.dev1
+# API migration — 0.1.1.dev2
 
 The published v0.1.0 alpha API is preserved at its tag. Main intentionally tightens
 safety behavior; applications must not interpret this as a compatible automation
@@ -23,9 +23,17 @@ this slice issues neither. No actual network/provider orchestration occurs here.
 schemas/v0.1 and contracts.py define the planned six-task clinical request/response:
 request-scoped Patient State, source-span provenance, no caller risk/capability,
 separate native/selected/calibrated confidence, fixed reason codes and version hashes.
-These resources/validators are now shipped but are not yet connected to MedSystem1.route.
-There is no completed HTTP decide endpoint or conversion between these two APIs.
-Do not construct a clinical response by serializing RouteDecision.
+MedSystem1.decide(request_dict) now validates these contracts and computes local
+rules results. It returns the canonical response envelope with evidence, risk,
+review status and versions. RequestModel/ResponseModel snapshot serialized JSON;
+later mutation of caller dictionaries cannot alter an accepted snapshot. Invalid
+facade input raises DecisionRequestError('invalid_request') without clinical text.
+The CLI uses strict JSON decoding: duplicate keys and non-finite numbers fail closed.
+Patient State is scoped to a call; configuration is frozen per system instance.
+There is no HTTP decide endpoint or conversion between these two APIs yet.
+Do not serialize legacy RouteDecision as a canonical clinical response.
+Model auto remains disabled, while supported low-risk deterministic computations
+may return rules/completed. This is structural output, not clinical approval.
 
 ## Regression versioning
 

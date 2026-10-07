@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.1.dev2 — 2026-10-08 (unreleased)
+
+- Port original immutable Schema-backed wire models and request-scoped Patient State;
+  snapshot JSON before validation and redact clinical identifiers from debug repr.
+- Port the finite six-task Chinese rules, whole-source preflight and evidence
+  checking, preserving historical/other-subject/negation/unknown/conflict behavior.
+- Add MedSystem1.decide for canonical requests alongside legacy advisory route,
+  plus local demo/decide CLI with strict JSON and fixed redacted errors.
+- Preserve model auto/cloud disabled. Low-risk deterministic structure can complete;
+  risk, unknown grammar, conflicts and urgency retain mandatory review.
+- Reuse original rules/kernel tests and add facade isolation, provenance and transport
+  safety tests. Real providers, HTTP, calibration and formal benchmark remain pending.
+
 ## 0.1.1.dev1 — 2026-10-07 (unreleased)
 
 - Restore the complete original v0.1 specification set, seven canonical schemas,

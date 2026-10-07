@@ -4,7 +4,7 @@
 
 > Know when to act. Know when to escalate. Know when to stop.
 
-MedSystem1 is an early-stage Python library for bounded medical-AI routing. It keeps **model confidence separate from clinical authority**. Current main is review-only until the original task, evidence, deployment and calibration gates are fully integrated; native scores cannot authorize LOCAL or cloud export.
+MedSystem1 is an early-stage Python library for bounded medical-AI routing. It keeps **model confidence separate from clinical authority**. The legacy model-routing entry is review-only; native scores cannot authorize LOCAL or cloud export. The separate canonical decide interface can complete bounded deterministic rules after checking all source text.
 
 The complete original v0.1 plan, canonical schemas and M0–M6 acceptance requirements are restored. See [implementation status](docs/IMPLEMENTATION_STATUS.md), [product scope](PRODUCT_SPEC_v0.1.md), [development plan](DEVELOPMENT_SPEC_v0.1.md) and [API migration](docs/API_MIGRATION.md). Historical local progress is not GitHub acceptance evidence.
 
@@ -37,7 +37,7 @@ python -m pip install "medsystem1 @ git+https://github.com/qiqilong01-wq/MedSyst
 
 Maintainers: see [publishing and recovery](docs/PUBLISHING.md).
 
-The example below targets unreleased main 0.1.1.dev1. The fixed v0.1.0 alpha
+The example below targets unreleased development version 0.1.1.dev2. The fixed v0.1.0 alpha
 retains earlier routing behavior. To use the review-only behavior described here,
 install a checkout of the development branch with `python -m pip install -e .`.
 No new PyPI/stable release is claimed by this change.
@@ -71,11 +71,35 @@ print(decision.action.value)  # HUMAN_REVIEW
 
 ## v0.1 scope
 
-Included: review-only safety router, trusted six-task catalog, canonical clinical schemas/validators, provider protocols, normalized-state primitives, synthetic examples and engineering evaluation tools. The canonical wire request/response is not yet integrated with the legacy route facade.
+Included: review-only model router, trusted six-task catalog, immutable canonical wire models, request-scoped Patient State, finite Chinese rules and whole-input review guards, local decide/CLI, provider protocols and engineering evaluation tools. Canonical rules and legacy model routing are separate entry points.
 
 The six release tasks are laterality, temporal_classification, photopsia, floaters, missing_fields and urgency_to_review. The last always requires review. Existing generic extraction/IOP scorer fixtures remain optional engineering experiments; they do not expand release scope. Default model auto and cloud calls are disabled; model auto coverage is currently 0.
 
 Not included: diagnosis, prescribing, autonomous treatment, ASR/OCR, proprietary NER, full FHIR, HIS/PACS integration, or a complete clinical agent.
+
+## Canonical local rules
+
+```python
+import json
+from pathlib import Path
+from medsystem1 import MedSystem1
+
+request = json.loads(Path("examples/ophthalmology/request.json").read_text(encoding="utf-8"))
+response = MedSystem1().decide(request)
+print(response["route"])  # human_review for the packaged synthetic risk cues
+```
+
+```bash
+python -m medsystem1 demo
+python -m medsystem1 decide --input examples/ophthalmology/request.json
+```
+
+Rules support a fully matched, finite Chinese grammar. Complex/unsupported text,
+uncertain subject, conflicts, current review cues and urgency_to_review remain
+review-only. Low-risk supported structural output may complete via rules, with
+all model probabilities null. Results preserve source code-point evidence offsets.
+CLI stdout is the structured result; stderr is metadata only. Install/demo/decide
+perform no model download, provider calls, exports or patient-state persistence.
 
 ## Provider model
 

@@ -8,6 +8,22 @@ from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 
 
+def parse_request_json(raw):
+    """Strict transport decoder: duplicate keys/non-finite JSON fail closed."""
+    def unique(pairs):
+        result={}
+        for key,value in pairs:
+            if key in result:
+                raise ValueError('duplicate_json_field')
+            result[key]=value
+        return result
+
+    def reject_constant(_):
+        raise ValueError('non_finite_number')
+
+    return json.loads(raw,object_pairs_hook=unique,parse_constant=reject_constant)
+
+
 @lru_cache(maxsize=8)
 def schema_registry(schema_dir: Path) -> tuple[dict, Registry]:
     # Public versioned Schemas only. Never cache requests, facts, or results.

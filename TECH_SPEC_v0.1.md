@@ -2,7 +2,15 @@
 
 # Technical specification v0.1
 
-Spec revision 0.1.1 · Schema version 0.1.0 · Runtime target 0.1.0
+Spec revision 0.1.3 · Schema version 0.1.0 · Runtime target 0.1.0
+
+GitHub implementation update (0.1.1.dev2): immutable wire models, request-scoped
+normalization, finite grammar/preflight, rules/review envelope and local CLI are
+ported. The library exposes canonical decide separately from advisory route.
+The pure policy kernel uses str/Enum for Python 3.10 compatibility; its contexts
+are internal trusted state, not HTTP requests. Provider/HTTP/frontier integration
+and calibration remain pending. Historical local implementation notes below are
+migration sources; current acceptance is docs/IMPLEMENTATION_STATUS.md.
 
 ## 1. Minimal architecture
 

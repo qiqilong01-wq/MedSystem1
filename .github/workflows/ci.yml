@@ -23,6 +23,9 @@ jobs:
       - run: ruff check .
       - run: pytest -q
       - run: python tools/validate_package.py
+      - name: Validate installed wheel outside checkout
+        working-directory: ${{ runner.temp }}
+        run: python "$GITHUB_WORKSPACE/tools/validate_installed_wheel.py"
       - run: python benchmarks/run_routing.py
       - run: python benchmarks/run_extraction.py --self-test
 
