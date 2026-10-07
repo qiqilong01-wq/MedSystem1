@@ -48,3 +48,19 @@ Duplicate case IDs and non-finite JSON numbers are rejected.
 
 The original `ophthalmology_zh_v0.1.jsonl` remains an extraction annotation
 scaffold. The routing runner does not score that file or claim model performance.
+
+## Offline extraction evaluator
+
+The separate 24-case `extraction_ophthalmology_zh_v0.1.jsonl` defines task-specific
+scalar facts and source-evidence anchors. Use:
+
+```bash
+python benchmarks/run_extraction.py --self-test
+python benchmarks/run_extraction.py --predictions predictions.jsonl --provider-label provider@version-run-id
+```
+
+Self-test replays gold and verifies the scorer; it is not a model result.
+Recorded predictions are scored with one-to-one fact matching, source-supported
+metrics, output-error counts, exact-case rates, and per-dimension coverage.
+See [extraction evaluation](../docs/EXTRACTION_EVALUATION.md) for schemas,
+annotation conventions, failure behavior, and metric limitations.

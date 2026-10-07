@@ -26,9 +26,11 @@ Copilot v0.2 MVP, its Patient State contract, or its application milestones.
    dependencies/downloads to core.
 3. **Ophthalmology benchmark.** A 30-case versioned synthetic routing regression
    now runs in CI and reports failures and coverage. Its scenario signals are
-   supplied annotations, not extracted facts. Next establish a bounded provider
-   extraction evaluator and laterality/negation/correction annotations; compare
-   a real injected provider only after its license and runtime are chosen.
+   supplied annotations, not extracted facts. A separate 24-case extraction
+   evaluator scores recorded scalar facts and evidence; its gold-replay self-test
+   is not a model result. See [EXTRACTION_EVALUATION.md](EXTRACTION_EVALUATION.md).
+   Next compare a real injected provider only after its license, version,
+   task prompts, normalization, and runtime are chosen.
    Do not equate policy regression success with extraction or clinical performance.
 4. **Audit events and conformance.** Add minimal read-only decision/failure
    events when their schema and consumer are established; do not log raw clinical
