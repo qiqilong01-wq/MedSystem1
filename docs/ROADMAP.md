@@ -6,7 +6,7 @@ Copilot v0.2 MVP, its Patient State contract, or its application milestones.
 ## Current baseline
 
 - v0.1.0 is the published GitHub alpha tag; preserve its commit.
-- Main uses 0.1.1.dev0 for routing-contract hardening; it is not a new release.
+- Main uses 0.1.1.dev0 for routing/provider hardening; it is not a new release.
 - Verify PyPI upload separately using [PUBLISHING.md](PUBLISHING.md).
 - Core remains dependency-free; synthetic benchmark cases are not clinical validation.
 
@@ -18,15 +18,18 @@ Copilot v0.2 MVP, its Patient State contract, or its application milestones.
    and require repair/review, never treat exceptions as authorization. Default
    thresholds are engineering policy, not statistically calibrated safety
    guarantees. Calibration hooks require benchmark evidence before implementation.
-2. **Optional providers.** OpenMed and Strands callable adapters exist. Next
-   add provider conformance coverage for missing/malformed state, absent evidence,
-   output shapes, and provider failures. Real SDK/model integration remains
+2. **Optional providers.** OpenMed and Strands callable adapters have explicit
+   contracts, normalized-state validation, and conformance coverage for
+   missing/malformed state, absent evidence, output shapes, and provider failures.
+   See [PROVIDERS.md](PROVIDERS.md). Real SDK/model integration remains
    unvalidated until tested with versioned synthetic fixtures. Do not add model
    dependencies/downloads to core.
-3. **Ophthalmology benchmark.** Expand synthetic laterality, negation, duration,
-   correction, and numeric cases with a documented annotation policy and a
-   reproducible runner. Report failures and coverage; do not equate scaffold
-   success with extraction or clinical performance.
+3. **Ophthalmology benchmark.** A 30-case versioned synthetic routing regression
+   now runs in CI and reports failures and coverage. Its scenario signals are
+   supplied annotations, not extracted facts. Next establish a bounded provider
+   extraction evaluator and laterality/negation/correction annotations; compare
+   a real injected provider only after its license and runtime are chosen.
+   Do not equate policy regression success with extraction or clinical performance.
 4. **Audit events and conformance.** Add minimal read-only decision/failure
    events when their schema and consumer are established; do not log raw clinical
    text by default. No distributed control plane or automatic repair.

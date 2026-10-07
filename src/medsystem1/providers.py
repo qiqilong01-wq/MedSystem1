@@ -6,14 +6,20 @@ from .models import ClinicalState
 
 
 class ExtractionProvider(Protocol):
-    """Turn input into normalized clinical state."""
+    """Return attributable state; validate it before merging into Patient State.
+
+    Errors stop the operation. Empty state is valid shape, not evidence.
+    """
 
     def extract(self, payload: Any) -> ClinicalState:
         ...
 
 
 class DecisionProvider(Protocol):
-    """Optional bounded decision provider. It never grants clinical authority."""
+    """Return finite confidence and advisory metadata, never clinical authority.
+
+    The caller owns task risk, capabilities, and the final SafetyRouter request.
+    """
 
     def decide(self, *, task: str, state: ClinicalState) -> tuple[float, dict[str, Any]]:
         ...

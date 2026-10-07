@@ -76,6 +76,10 @@ Integrations are optional. MedSystem1 owns the safety contract, not the upstream
 - `DecisionProvider`: optional bounded classifier/decider → confidence + metadata.
 - OpenMed and Strands Decider are intended adapters; third-party model assets are not bundled into core.
 
+Callable adapter shapes, evidence checks, and error handling are documented in
+[Provider contracts](docs/PROVIDERS.md). Tests cover injected synthetic callables;
+real upstream SDK/model integrations remain unvalidated.
+
 ## Safety
 
 MedSystem1 is research/developer infrastructure, **not a medical device and not a substitute for clinician judgment**. It does not authorize diagnosis, prescribing, treatment changes, record submission, procedures, or other high-risk clinical actions. See [SAFETY.md](SAFETY.md).
@@ -94,6 +98,7 @@ For a source checkout:
 pip install -e ".[dev]"
 ruff check .
 pytest -q
+python benchmarks/run_routing.py
 ```
 
 ## Roadmap
