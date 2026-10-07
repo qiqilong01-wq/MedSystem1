@@ -6,6 +6,13 @@
 - Reject boolean/non-numeric confidence, invalid thresholds, and non-boolean schema/evidence signals.
 - Keep explicit high/unknown task risk on HUMAN_REVIEW before checking evidence.
 - Reject non-finite, out-of-range, or boolean adapter confidence.
+- Reject malformed extraction batches and unmatched literal evidence instead of returning partial success.
+- Validate normalized provider state and decision metadata; remove opaque raw-result metadata.
+
+### Added
+- ProviderContractError / ProviderExecutionError and public normalized-state validation.
+- Provider conformance tests including authority boundaries and execution failures.
+- Versioned 30-case synthetic ophthalmology routing-policy regression runner with failure exit codes.
 
 ### Development
 - Verify distribution metadata and run CI tests against the installed wheel.
