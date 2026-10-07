@@ -64,3 +64,11 @@ Recorded predictions are scored with one-to-one fact matching, source-supported
 metrics, output-error counts, exact-case rates, and per-dimension coverage.
 See [extraction evaluation](../docs/EXTRACTION_EVALUATION.md) for schemas,
 annotation conventions, failure behavior, and metric limitations.
+
+# Policy consolidation — fixture v0.3
+
+The default routing runner now uses routing_ophthalmology_zh_v0.3.jsonl with
+review-only model policy expectations. The 0.2 fixture is preserved for the old
+alpha behavior. A passing regression reports policy conformance; model auto
+coverage is 0 and no confidence calibration/model accuracy is claimed.
+

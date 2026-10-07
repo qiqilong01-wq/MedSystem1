@@ -23,7 +23,7 @@ def load_cases(path: Path) -> list[dict]:
                 continue
             try:
                 case = json.loads(line, parse_constant=reject_constant)
-                if not isinstance(case, dict) or case.get("schema_version") != "0.2":
+                if not isinstance(case, dict) or case.get("schema_version") != "0.3":
                     raise ValueError("fixture schema mismatch")
                 if case.get("synthetic") is not True:
                     raise ValueError("fixture must be explicitly synthetic")
@@ -69,7 +69,7 @@ def evaluate(cases: list[dict]) -> dict:
         successes = sum(r["passed"] for r in results if r["dimension"] == dimension)
         coverage[dimension] = {"total": total, "passed": successes, "failed": total - successes}
     return {
-        "scope": "synthetic_routing_regression", "fixture_schema_version": "0.2",
+        "scope": "synthetic_routing_regression", "fixture_schema_version": "0.3",
         "package_version": __version__, "total": len(results), "passed": passed,
         "failed": len(results) - passed, "coverage": coverage, "results": results,
     }
@@ -79,7 +79,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--cases", type=Path,
-        default=Path(__file__).with_name("routing_ophthalmology_zh_v0.2.jsonl"),
+        default=Path(__file__).with_name("routing_ophthalmology_zh_v0.3.jsonl"),
     )
     args = parser.parse_args()
     try:
@@ -93,3 +93,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

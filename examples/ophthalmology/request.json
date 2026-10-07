@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.1.0",
+  "patient_state": {
+    "state_id": "synthetic-state-1",
+    "revision": 1,
+    "encounter_id": "synthetic-encounter-1",
+    "language": "zh-CN",
+    "sources": [
+      {
+        "source_id": "s1",
+        "kind": "synthetic",
+        "text": "患者右眼看东西模糊三个月，昨天开始明显加重，还有闪光感和黑影飘动。"
+      }
+    ],
+    "facts": []
+  },
+  "tasks": [
+    "laterality",
+    "temporal_classification",
+    "photopsia",
+    "floaters",
+    "missing_fields",
+    "urgency_to_review"
+  ],
+  "cloud_fallback_requested": false
+}

@@ -1,5 +1,16 @@
 # Third-party software and assets
 
+## Canonical validation dependency (0.1.1.dev1)
+
+The restored clinical contracts use jsonschema 4.23.0 (MIT). The observed Windows
+Python 3.12 dependency lock is requirements-core-py312.txt; other platforms require
+their own installation/CI evidence. Installed artifact license metadata, including
+dev/build tools, is recorded in docs/verification/dependencies-dev1.json.
+Dependencies are installed separately and are not vendored into MedSystem1.
+pathspec's MPL-2.0 applies to that build tool's files; it does not relicense the
+original MedSystem1 library. Redistributed environments/containers require their
+own complete license/notice inventory. Original code remains Apache-2.0.
+
 MedSystem1 core is distributed under Apache-2.0 and intentionally keeps third-party model/runtime dependencies out of the core package.
 
 ## OpenMed
@@ -31,3 +42,4 @@ Before bundling any third-party code, model, dataset, weights, tokenizer, binary
 7. do not merge the asset into a release until its licensing is understood.
 
 A permissive license on an SDK does not imply the same license for models or datasets used through that SDK.
+

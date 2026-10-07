@@ -5,7 +5,7 @@ from medsystem1 import Action, MedSystem1, RouteRequest, SafetyRouter
 
 def req(**overrides):
     values = dict(
-        task="extract_iop",
+        task="laterality",
         confidence=0.95,
         schema_valid=True,
         evidence_present=True,
@@ -15,8 +15,8 @@ def req(**overrides):
     return RouteRequest(**values)
 
 
-def test_low_risk_high_confidence_can_stay_local():
-    assert MedSystem1().route(req()).action is Action.LOCAL
+def test_high_native_confidence_stays_review_without_calibration():
+    assert MedSystem1().route(req()).action is Action.HUMAN_REVIEW
 
 
 def test_high_risk_never_becomes_local_from_confidence():
@@ -25,12 +25,12 @@ def test_high_risk_never_becomes_local_from_confidence():
     ).action is Action.HUMAN_REVIEW
 
 
-def test_missing_evidence_escalates():
-    assert MedSystem1().route(req(evidence_present=False)).action is Action.ESCALATE
+def test_missing_evidence_locks_review():
+    assert MedSystem1().route(req(evidence_present=False)).action is Action.HUMAN_REVIEW
 
 
-def test_invalid_schema_escalates():
-    assert MedSystem1().route(req(schema_valid=False)).action is Action.ESCALATE
+def test_invalid_schema_locks_review():
+    assert MedSystem1().route(req(schema_valid=False)).action is Action.HUMAN_REVIEW
 
 
 def test_unknown_capability_fails_conservatively():
@@ -41,8 +41,8 @@ def test_medium_confidence_requires_review():
     assert MedSystem1().route(req(confidence=0.80)).action is Action.HUMAN_REVIEW
 
 
-def test_low_confidence_escalates():
-    assert MedSystem1().route(req(confidence=0.40)).action is Action.ESCALATE
+def test_low_confidence_has_no_implicit_export_permission():
+    assert MedSystem1().route(req(confidence=0.40)).action is Action.HUMAN_REVIEW
 
 
 def test_bad_confidence_rejected():
@@ -105,8 +105,8 @@ def test_authority_boundary_survives_evidence_failure_and_risk_override(capabili
 
 
 @pytest.mark.parametrize("confidence, expected", [
-    (0.0, Action.ESCALATE), (0.649, Action.ESCALATE), (0.65, Action.HUMAN_REVIEW),
-    (0.899, Action.HUMAN_REVIEW), (0.90, Action.LOCAL), (1, Action.LOCAL),
+    (0.0, Action.HUMAN_REVIEW), (0.649, Action.HUMAN_REVIEW), (0.65, Action.HUMAN_REVIEW),
+    (0.899, Action.HUMAN_REVIEW), (0.90, Action.HUMAN_REVIEW), (1, Action.HUMAN_REVIEW),
 ])
 def test_default_threshold_edges(confidence, expected):
     assert MedSystem1().route(req(confidence=confidence)).action is expected
@@ -114,3 +114,4 @@ def test_default_threshold_edges(confidence, expected):
 
 def test_medium_risk_never_uses_local_even_at_full_confidence():
     assert MedSystem1().route(req(risk="medium", confidence=1.0)).action is Action.HUMAN_REVIEW
+

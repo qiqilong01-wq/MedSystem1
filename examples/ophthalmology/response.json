@@ -1,0 +1,172 @@
+{
+  "schema_version": "0.1.0",
+  "request_id": "synthetic-response-1",
+  "status": "review_required",
+  "risk": "high",
+  "route": "human_review",
+  "review_required": true,
+  "results": [
+    {
+      "task_id": "laterality",
+      "value": "right",
+      "status": "review_required",
+      "risk": "high",
+      "route": "human_review",
+      "reason_codes": [
+        "risk_requires_review"
+      ],
+      "confidence": {
+        "native_score": null,
+        "selected_probability": null,
+        "calibrated_probability": null,
+        "calibration_status": "not_available",
+        "artifact_id": null
+      },
+      "evidence": [
+        {
+          "source_id": "s1",
+          "start": 0,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "task_id": "temporal_classification",
+      "value": "longstanding_with_recent_change",
+      "status": "review_required",
+      "risk": "high",
+      "route": "human_review",
+      "reason_codes": [
+        "risk_requires_review"
+      ],
+      "confidence": {
+        "native_score": null,
+        "selected_probability": null,
+        "calibrated_probability": null,
+        "calibration_status": "not_available",
+        "artifact_id": null
+      },
+      "evidence": [
+        {
+          "source_id": "s1",
+          "start": 0,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "task_id": "photopsia",
+      "value": "present",
+      "status": "review_required",
+      "risk": "high",
+      "route": "human_review",
+      "reason_codes": [
+        "risk_requires_review"
+      ],
+      "confidence": {
+        "native_score": null,
+        "selected_probability": null,
+        "calibrated_probability": null,
+        "calibration_status": "not_available",
+        "artifact_id": null
+      },
+      "evidence": [
+        {
+          "source_id": "s1",
+          "start": 0,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "task_id": "floaters",
+      "value": "present",
+      "status": "review_required",
+      "risk": "high",
+      "route": "human_review",
+      "reason_codes": [
+        "risk_requires_review"
+      ],
+      "confidence": {
+        "native_score": null,
+        "selected_probability": null,
+        "calibrated_probability": null,
+        "calibration_status": "not_available",
+        "artifact_id": null
+      },
+      "evidence": [
+        {
+          "source_id": "s1",
+          "start": 0,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "task_id": "missing_fields",
+      "value": [
+        "visual_acuity",
+        "examination"
+      ],
+      "status": "review_required",
+      "risk": "high",
+      "route": "human_review",
+      "reason_codes": [
+        "risk_requires_review",
+        "rule_missing_fields"
+      ],
+      "confidence": {
+        "native_score": null,
+        "selected_probability": null,
+        "calibrated_probability": null,
+        "calibration_status": "not_available",
+        "artifact_id": null
+      },
+      "evidence": []
+    },
+    {
+      "task_id": "urgency_to_review",
+      "value": "needs_review",
+      "status": "review_required",
+      "risk": "high",
+      "route": "human_review",
+      "reason_codes": [
+        "risk_requires_review"
+      ],
+      "confidence": {
+        "native_score": null,
+        "selected_probability": null,
+        "calibrated_probability": null,
+        "calibration_status": "not_available",
+        "artifact_id": null
+      },
+      "evidence": [
+        {
+          "source_id": "s1",
+          "start": 0,
+          "end": 33
+        }
+      ]
+    }
+  ],
+  "reason_codes": [
+    "risk_requires_review"
+  ],
+  "versions": {
+    "software": "0.1.0.dev0-synthetic-fixture",
+    "policy": "policy-0.1.0",
+    "rules": "rules-0.1.0",
+    "prompt": "prompts-0.1.0",
+    "provider": "none-synthetic-example",
+    "model": "none",
+    "model_revision": "none",
+    "base_revision": "none",
+    "calibration_artifacts": [],
+    "config_sha256": "34c26f1ca6f006f7544925c9bf00db346abfb03eea1d5f8dedf0d6485ed8bc20"
+  },
+  "timing_ms": {
+    "total": 0,
+    "local": null,
+    "frontier": null
+  }
+}

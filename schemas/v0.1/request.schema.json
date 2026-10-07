@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.medsystem1.invalid/v0.1/request.schema.json",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "patient_state": {
+      "$ref": "patient-state.schema.json"
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "laterality",
+          "temporal_classification",
+          "photopsia",
+          "floaters",
+          "missing_fields",
+          "urgency_to_review"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 6,
+      "uniqueItems": true
+    },
+    "cloud_fallback_requested": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schema_version",
+    "patient_state",
+    "tasks",
+    "cloud_fallback_requested"
+  ],
+  "additionalProperties": false
+}

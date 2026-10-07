@@ -152,17 +152,18 @@ def test_invalid_decision_input_stops_before_calling_provider(task, state):
     ("change_treatment", True, Action.HUMAN_REVIEW),
     ("submit_medical_record", True, Action.HUMAN_REVIEW),
     ("unknown_tool", True, Action.HUMAN_REVIEW),
-    ("extract_structured_fact", False, Action.ESCALATE),
-    ("extract_structured_fact", True, Action.LOCAL),
+    ("extract_structured_fact", False, Action.HUMAN_REVIEW),
+    ("extract_structured_fact", True, Action.HUMAN_REVIEW),
 ])
 def test_provider_suggested_local_never_overrides_router(capability, evidence, expected):
     state = ClinicalState((ClinicalFact("iop", 16, evidence="眼压16" if evidence else None),))
     score, metadata = StrandsDecisionProvider(
         lambda **_: {"confidence": 1.0, "action": "LOCAL", "capability": "extract_structured_fact"}
-    ).decide(task="format_note", state=state)
+    ).decide(task="laterality", state=state)
     decision = MedSystem1().route(RouteRequest(
-        task="format_note", confidence=score, schema_valid=True,
+        task="laterality", confidence=score, schema_valid=True,
         evidence_present=bool(state.facts) and all(f.evidence is not None for f in state.facts),
         capability=capability, metadata=metadata,
     ))
     assert decision.action is expected
+

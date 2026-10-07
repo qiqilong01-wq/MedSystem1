@@ -1,0 +1,81 @@
+{
+  "schema_version": "0.1.0",
+  "catalog_version": "tasks-0.1.0",
+  "documentation_profile": {
+    "profile_id": "ophthalmology-demo-0.1.0",
+    "required_fields": [
+      "laterality",
+      "symptom_duration",
+      "visual_acuity",
+      "examination"
+    ]
+  },
+  "tasks": {
+    "laterality": {
+      "labels": [
+        "left",
+        "right",
+        "bilateral",
+        "unknown",
+        "conflicting"
+      ],
+      "base_risk": "low",
+      "provider_question_type": "choice",
+      "instructions": "Classify the current patient complaint side explicitly stated in source text. Do not infer from disease. Other subjects do not establish patient laterality."
+    },
+    "temporal_classification": {
+      "labels": [
+        "recent",
+        "longstanding",
+        "longstanding_with_recent_change",
+        "unknown",
+        "conflicting"
+      ],
+      "base_risk": "low",
+      "provider_question_type": "choice",
+      "instructions": "Classify explicit time information only. recent means <=7 days as an engineering label; longstanding >7 days; recent change to a longstanding complaint has its own label. Unknown numeric duration -> unknown."
+    },
+    "photopsia": {
+      "labels": [
+        "present",
+        "absent",
+        "unknown",
+        "conflicting"
+      ],
+      "base_risk": "low",
+      "provider_question_type": "choice",
+      "instructions": "Classify explicit current patient photopsia statement. Negated -> absent, unmentioned or uncertain -> unknown, inconsistent current assertions -> conflicting."
+    },
+    "floaters": {
+      "labels": [
+        "present",
+        "absent",
+        "unknown",
+        "conflicting"
+      ],
+      "base_risk": "low",
+      "provider_question_type": "choice",
+      "instructions": "Classify explicit current patient floaters statement. Negated -> absent, unmentioned or uncertain -> unknown, inconsistent current assertions -> conflicting."
+    },
+    "missing_fields": {
+      "labels": [
+        "laterality",
+        "symptom_duration",
+        "visual_acuity",
+        "examination"
+      ],
+      "base_risk": "low",
+      "provider_question_type": "deterministic",
+      "instructions": "Compare known current patient facts with the documentation profile. Unknown or insufficient fields count as missing. No exam recommendation."
+    },
+    "urgency_to_review": {
+      "labels": [
+        "needs_review",
+        "unknown"
+      ],
+      "base_risk": "moderate",
+      "provider_question_type": "choice",
+      "instructions": "Engineering workflow review hint only. A review guard or conflict yields needs_review, otherwise unknown. Always require human review; never diagnose or declare safe."
+    }
+  }
+}

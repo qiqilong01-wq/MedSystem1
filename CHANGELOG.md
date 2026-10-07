@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.1.dev1 — 2026-10-07 (unreleased)
+
+- Restore the complete original v0.1 specification set, seven canonical schemas,
+  versioned task/policy/provider configs, fixtures and shared AGENTS/CLAUDE entry.
+- Enforce the trusted six-task catalog and task-owned risk/capability; unknown or
+  clinical-action tasks cannot obtain LOCAL by claiming a low-risk capability.
+- Default model routing to HUMAN_REVIEW regardless of native confidence. Moderate
+  risk, invalid schema and missing evidence now lock review rather than ESCALATE.
+- Preserve legacy Python input shape and released v0.1.0 tag; document intentionally
+  tightened behavior and unfinished canonical wire/orchestrator integration.
+- Add regression fixture v0.3 without rewriting v0.2 or extraction gold truth.
+  Current model auto coverage is 0; gold replay remains a scorer self-test.
+- Package schemas/catalog in wheels; add canonical validation and scope tests.
+  Full M0–M6 acceptance, real Strands, calibration and release benchmark remain pending.
+
 ## 0.1.1 - Unreleased
 
 ### Fixed
@@ -35,3 +50,4 @@
 - Model confidence is never treated as clinical authority.
 - Unknown capabilities fail conservatively.
 - High-risk clinical capabilities require human review.
+

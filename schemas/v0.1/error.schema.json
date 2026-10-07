@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.medsystem1.invalid/v0.1/error.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "error", "request_id"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "request_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code"],
+      "properties": {
+        "code": {"enum": ["invalid_json", "invalid_request", "payload_too_large", "service_unavailable"]}
+      }
+    }
+  }
+}

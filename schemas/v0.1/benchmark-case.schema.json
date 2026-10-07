@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.medsystem1.invalid/v0.1/benchmark-case.schema.json",
+  "type": "object",
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "group_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "split": {
+      "enum": [
+        "smoke",
+        "dev",
+        "calibration",
+        "test"
+      ]
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "request": {
+      "$ref": "request.schema.json"
+    },
+    "expected_values": {
+      "type": "object",
+      "properties": {
+        "laterality": {
+          "enum": [
+            "left",
+            "right",
+            "bilateral",
+            "unknown",
+            "conflicting"
+          ]
+        },
+        "temporal_classification": {
+          "enum": [
+            "recent",
+            "longstanding",
+            "longstanding_with_recent_change",
+            "unknown",
+            "conflicting"
+          ]
+        },
+        "photopsia": {
+          "enum": [
+            "present",
+            "absent",
+            "unknown",
+            "conflicting"
+          ]
+        },
+        "floaters": {
+          "enum": [
+            "present",
+            "absent",
+            "unknown",
+            "conflicting"
+          ]
+        },
+        "missing_fields": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "laterality",
+              "symptom_duration",
+              "visual_acuity",
+              "examination"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 4,
+          "uniqueItems": true
+        },
+        "urgency_to_review": {
+          "enum": [
+            "needs_review",
+            "unknown"
+          ]
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "expected_review_required": {
+      "type": "boolean"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "minItems": 1,
+      "maxItems": 12
+    }
+  },
+  "required": [
+    "case_id",
+    "group_id",
+    "split",
+    "synthetic",
+    "request",
+    "expected_values",
+    "expected_review_required",
+    "tags"
+  ],
+  "additionalProperties": false
+}

@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling>=1.25"]
+requires = ["hatchling==1.27.0"]
 build-backend = "hatchling.build"
 
 [project]
 name = "medsystem1"
-version = "0.1.1.dev0"
+version = "0.1.1.dev1"
 description = "Local-first safety and routing layer for medical AI"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -18,10 +18,10 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
 ]
-dependencies = []
+dependencies = ["jsonschema==4.23.0"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0", "ruff>=0.6"]
+dev = ["pytest==8.3.5", "ruff==0.11.13", "build==1.2.2.post1"]
 
 [project.urls]
 Repository = "https://github.com/qiqilong01-wq/MedSystem1"
@@ -29,6 +29,10 @@ Issues = "https://github.com/qiqilong01-wq/MedSystem1/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/medsystem1"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"configs/v0.1" = "medsystem1/_data/configs/v0.1"
+"schemas/v0.1" = "medsystem1/_data/schemas/v0.1"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -40,3 +44,4 @@ target-version = "py310"
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F"]
 ignore = ["E501"]
+

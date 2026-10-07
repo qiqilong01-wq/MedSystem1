@@ -1,0 +1,357 @@
+{
+  "scope": "synthetic_routing_regression",
+  "fixture_schema_version": "0.3",
+  "package_version": "0.1.1.dev1",
+  "total": 30,
+  "passed": 30,
+  "failed": 0,
+  "coverage": {
+    "authority": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    "confidence": {
+      "total": 5,
+      "passed": 5,
+      "failed": 0
+    },
+    "correction": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0
+    },
+    "duration": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0
+    },
+    "evidence": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0
+    },
+    "laterality": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0
+    },
+    "negation": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0
+    },
+    "numeric": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0
+    },
+    "risk": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0
+    }
+  },
+  "results": [
+    {
+      "id": "route-oph-001",
+      "dimension": "laterality",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-002",
+      "dimension": "laterality",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-003",
+      "dimension": "laterality",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-004",
+      "dimension": "negation",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-005",
+      "dimension": "negation",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-006",
+      "dimension": "duration",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-007",
+      "dimension": "duration",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-008",
+      "dimension": "correction",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-009",
+      "dimension": "correction",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-010",
+      "dimension": "numeric",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-011",
+      "dimension": "numeric",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-012",
+      "dimension": "numeric",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-013",
+      "dimension": "confidence",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-014",
+      "dimension": "confidence",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-015",
+      "dimension": "confidence",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-016",
+      "dimension": "confidence",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-017",
+      "dimension": "confidence",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-018",
+      "dimension": "evidence",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-019",
+      "dimension": "evidence",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-020",
+      "dimension": "risk",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-021",
+      "dimension": "risk",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-022",
+      "dimension": "risk",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-023",
+      "dimension": "authority",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "high-risk capability requires human authority"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-024",
+      "dimension": "authority",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "high-risk capability requires human authority"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-025",
+      "dimension": "authority",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "high-risk capability requires human authority"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-026",
+      "dimension": "authority",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "high-risk capability requires human authority"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-027",
+      "dimension": "authority",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "high-risk capability requires human authority"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-028",
+      "dimension": "authority",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "high-risk capability requires human authority"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-029",
+      "dimension": "authority",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "task is outside the bounded v0.1 catalog"
+      ],
+      "passed": true
+    },
+    {
+      "id": "route-oph-030",
+      "dimension": "authority",
+      "expected_action": "HUMAN_REVIEW",
+      "actual_action": "HUMAN_REVIEW",
+      "reasons": [
+        "high-risk capability requires human authority"
+      ],
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,279 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.medsystem1.invalid/v0.1/policy.schema.json",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "rules_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "prompt_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "local": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "const": "strands"
+        },
+        "endpoint": {
+          "const": "http://127.0.0.1:8099"
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "strict_window": {
+          "const": true
+        },
+        "max_concurrency": {
+          "const": 1
+        }
+      },
+      "required": [
+        "provider",
+        "endpoint",
+        "timeout_ms",
+        "strict_window",
+        "max_concurrency"
+      ],
+      "additionalProperties": false
+    },
+    "frontier": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "endpoint": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_calls": {
+          "const": 1
+        },
+        "retry_count": {
+          "const": 0
+        }
+      },
+      "required": [
+        "enabled",
+        "endpoint",
+        "model",
+        "timeout_ms",
+        "max_calls",
+        "retry_count"
+      ],
+      "additionalProperties": false
+    },
+    "total_timeout_ms": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "observability": {
+      "const": "local_metadata_only"
+    },
+    "tasks": {
+      "type": "object",
+      "properties": {
+        "laterality": {
+          "type": "object",
+          "properties": {
+            "auto_enabled": {
+              "type": "boolean"
+            },
+            "confidence_threshold": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "auto_enabled",
+            "confidence_threshold"
+          ],
+          "additionalProperties": false
+        },
+        "temporal_classification": {
+          "type": "object",
+          "properties": {
+            "auto_enabled": {
+              "type": "boolean"
+            },
+            "confidence_threshold": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "auto_enabled",
+            "confidence_threshold"
+          ],
+          "additionalProperties": false
+        },
+        "photopsia": {
+          "type": "object",
+          "properties": {
+            "auto_enabled": {
+              "type": "boolean"
+            },
+            "confidence_threshold": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "auto_enabled",
+            "confidence_threshold"
+          ],
+          "additionalProperties": false
+        },
+        "floaters": {
+          "type": "object",
+          "properties": {
+            "auto_enabled": {
+              "type": "boolean"
+            },
+            "confidence_threshold": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "auto_enabled",
+            "confidence_threshold"
+          ],
+          "additionalProperties": false
+        },
+        "missing_fields": {
+          "type": "object",
+          "properties": {
+            "auto_enabled": {
+              "type": "boolean"
+            },
+            "confidence_threshold": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "auto_enabled",
+            "confidence_threshold"
+          ],
+          "additionalProperties": false
+        },
+        "urgency_to_review": {
+          "type": "object",
+          "properties": {
+            "auto_enabled": {
+              "const": false
+            },
+            "confidence_threshold": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "auto_enabled",
+            "confidence_threshold"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "laterality",
+        "temporal_classification",
+        "photopsia",
+        "floaters",
+        "missing_fields",
+        "urgency_to_review"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "policy_version",
+    "rules_version",
+    "prompt_version",
+    "local",
+    "frontier",
+    "total_timeout_ms",
+    "observability",
+    "tasks"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "frontier": {
+            "properties": {
+              "enabled": {
+                "const": true
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "frontier": {
+            "properties": {
+              "endpoint": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "model": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
