@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from .._validation import provider_confidence
 from ..models import ClinicalFact, ClinicalState
 
 
@@ -39,4 +40,4 @@ class OpenMedExtractionProvider:
 def _optional_float(value: Any) -> float | None:
     if value is None:
         return None
-    return float(value)
+    return provider_confidence(value)

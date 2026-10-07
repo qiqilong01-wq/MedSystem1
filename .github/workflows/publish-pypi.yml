@@ -4,17 +4,36 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+
 jobs:
   pypi:
     runs-on: ubuntu-latest
     environment: pypi
     permissions:
+      contents: read
       id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python -m pip install --upgrade pip build
+      - run: python -m pip install --upgrade pip build twine
+      - run: python -m pip install -e ".[dev]"
+      - run: ruff check .
+      - run: pytest -q
+      - name: Verify release tag matches package version
+        run: |
+          python - <<'PY'
+          import os
+          import tomllib
+          from pathlib import Path
+          from medsystem1 import __version__
+          version = tomllib.loads(Path("pyproject.toml").read_text())["project"]["version"]
+          if os.environ["GITHUB_REF_NAME"] != f"v{version}" or __version__ != version:
+              raise SystemExit("release tag, package metadata, and import version must match")
+          PY
       - run: python -m build
+      - run: python -m twine check --strict dist/*
       - uses: pypa/gh-action-pypi-publish@release/v1

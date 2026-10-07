@@ -11,6 +11,22 @@ MedSystem1 separates **prediction confidence** from **permission to act**.
 5. Escalation to a stronger model is not equivalent to authorization.
 6. Clinical state should be structured, attributable, and auditable; conversational memory is not a clinical source of truth.
 
+## Runtime input contract (unreleased main)
+
+Confidence and thresholds must be finite numbers in [0, 1]; booleans are not
+confidence values. Schema/evidence flags must be actual booleans, not strings
+or integers. Malformed input raises `ValueError`. Callers must stop the
+operation for repair/review; catching an exception must never fall through to
+an authorized clinical action.
+
+Explicit high-risk tasks and unknown risk levels keep HUMAN_REVIEW even when
+evidence is missing. A stronger model cannot repair missing human authority.
+The callable adapters allow finite numeric confidence strings from upstream
+payloads but reject booleans and out-of-range/non-finite scores. An absent
+extraction confidence remains unknown (`None`).
+
+The default thresholds are policy settings, not calibrated clinical guarantees.
+
 ## High-risk capability examples
 
 The default policy bounds `final_diagnosis`, `prescribe_medication`, `change_treatment`, `submit_medical_record`, `perform_procedure`, and `autonomous_patient_instruction`.

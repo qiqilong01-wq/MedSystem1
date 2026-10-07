@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from ._validation import unit_interval
 from .models import Action, RouteDecision, RouteRequest
 
 
@@ -23,14 +24,19 @@ LOW_RISK_CAPABILITIES = frozenset({
 
 class SafetyRouter:
     def __init__(self, local_threshold: float = 0.90, review_threshold: float = 0.65):
+        local_threshold = unit_interval(local_threshold, name="local threshold")
+        review_threshold = unit_interval(review_threshold, name="review threshold")
         if not 0 <= review_threshold <= local_threshold <= 1:
             raise ValueError("thresholds must satisfy 0 <= review <= local <= 1")
         self.local_threshold = local_threshold
         self.review_threshold = review_threshold
 
     def route(self, request: RouteRequest) -> RouteDecision:
-        if not 0 <= request.confidence <= 1:
-            raise ValueError("confidence must be between 0 and 1")
+        unit_interval(request.confidence, name="confidence")
+        if type(request.schema_valid) is not bool or type(request.evidence_present) is not bool:
+            raise ValueError("schema_valid and evidence_present must be booleans")
+        if not isinstance(request.capability, str) or not request.capability.strip():
+            raise ValueError("capability must be a non-empty string")
 
         if request.capability in HIGH_RISK_CAPABILITIES:
             return RouteDecision(
@@ -48,18 +54,8 @@ class SafetyRouter:
                 request.confidence,
             )
 
-        evidence_failures = []
-        if not request.schema_valid:
-            evidence_failures.append("schema validation failed")
-        if not request.evidence_present:
-            evidence_failures.append("evidence is missing")
-        if evidence_failures:
-            return RouteDecision(
-                Action.ESCALATE, tuple(evidence_failures), "medium", request.confidence
-            )
-
         risk = "low" if request.risk == "auto" else request.risk
-        if risk not in {"low", "medium", "high"}:
+        if not isinstance(risk, str) or risk not in {"low", "medium", "high"}:
             return RouteDecision(
                 Action.HUMAN_REVIEW,
                 ("unrecognized risk level fails conservatively",),
@@ -69,6 +65,16 @@ class SafetyRouter:
         if risk == "high":
             return RouteDecision(
                 Action.HUMAN_REVIEW, ("task risk is high",), risk, request.confidence
+            )
+
+        evidence_failures = []
+        if not request.schema_valid:
+            evidence_failures.append("schema validation failed")
+        if not request.evidence_present:
+            evidence_failures.append("evidence is missing")
+        if evidence_failures:
+            return RouteDecision(
+                Action.ESCALATE, tuple(evidence_failures), "medium", request.confidence
             )
 
         if request.confidence >= self.local_threshold and risk == "low":
