@@ -8,7 +8,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "benchmarks" / "run_routing.py"
-FIXTURES = ROOT / "benchmarks" / "routing_ophthalmology_zh_v0.2.jsonl"
+FIXTURES = ROOT / "benchmarks" / "routing_ophthalmology_zh_v0.3.jsonl"
 
 
 def run(*args):
@@ -28,15 +28,15 @@ def test_versioned_routing_regression_runs_all_cases():
 
 
 def test_wrong_expectation_exits_nonzero_and_reports_case(tmp_path):
-    case = json.loads(FIXTURES.read_text().splitlines()[0])
-    case["expected_action"] = "HUMAN_REVIEW"
+    case = json.loads(FIXTURES.read_text(encoding="utf-8").splitlines()[0])
+    case["expected_action"] = "LOCAL"
     path = tmp_path / "wrong.jsonl"
     path.write_text(json.dumps(case), encoding="utf-8")
     result = run("--cases", str(path))
     assert result.returncode == 1
     report = json.loads(result.stdout)
     assert report["failed"] == 1
-    assert report["results"][0]["actual_action"] == "LOCAL"
+    assert report["results"][0]["actual_action"] == "HUMAN_REVIEW"
 
 
 @pytest.mark.parametrize("content", ["", "not-json", "{}", '{"synthetic": false}', '{"score": NaN}'])
@@ -50,14 +50,14 @@ def test_invalid_fixture_cannot_report_success(tmp_path, content):
 
 
 def test_duplicate_case_id_is_not_double_counted(tmp_path):
-    line = FIXTURES.read_text().splitlines()[0]
+    line = FIXTURES.read_text(encoding="utf-8").splitlines()[0]
     path = tmp_path / "duplicate.jsonl"
     path.write_text(line + "\n" + line, encoding="utf-8")
     assert run("--cases", str(path)).returncode == 2
 
 
 def test_malformed_route_request_is_a_failed_case(tmp_path):
-    case = json.loads(FIXTURES.read_text().splitlines()[0])
+    case = json.loads(FIXTURES.read_text(encoding="utf-8").splitlines()[0])
     case["request"]["evidence_present"] = "true"
     path = tmp_path / "bad-request.jsonl"
     path.write_text(json.dumps(case), encoding="utf-8")
@@ -65,3 +65,4 @@ def test_malformed_route_request_is_a_failed_case(tmp_path):
     assert result.returncode == 1
     report = json.loads(result.stdout)
     assert report["results"][0]["error"] == "ValueError"
+

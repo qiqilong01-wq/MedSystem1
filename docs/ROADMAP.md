@@ -1,14 +1,20 @@
 # Bounded roadmap and handoff
 
+Update 2026-10-07: the complete original M0–M6 plan is restored in
+DEVELOPMENT_SPEC_v0.1.md. docs/IMPLEMENTATION_STATUS.md distinguishes requirements,
+historical local work, implemented GitHub slices and outstanding acceptance.
+The list below describes the earlier GitHub baseline; it does not replace the
+full plan. Main now uses 0.1.1.dev1 with review-only defaults.
+
 This tracks the existing README roadmap. It does not change the Ophthalmology
 Copilot v0.2 MVP, its Patient State contract, or its application milestones.
 
 ## Current baseline
 
 - v0.1.0 is the published GitHub alpha tag; preserve its commit.
-- Main uses 0.1.1.dev0 for routing/provider hardening; it is not a new release.
+- Main uses 0.1.1.dev1 for consolidation/safety hardening; it is not a new release.
 - Verify PyPI upload separately using [PUBLISHING.md](PUBLISHING.md).
-- Core remains dependency-free; synthetic benchmark cases are not clinical validation.
+- Canonical validation uses jsonschema 4.23.0; no model/SDK runtime is installed by core. Synthetic cases are not clinical validation.
 
 ## Work in order
 
@@ -50,3 +56,4 @@ No new ASR/OCR, diagnosis, prescribing, autonomous patient instructions,
 medical-record submission, HIS/PACS, enterprise permissions, or multi-agent
 runtime is required by this roadmap. Keep the v0.2 text/mock milestone and
 existing recording-to-reviewed-note workflow as the product priority.
+

@@ -2,7 +2,9 @@
 
 These adapters wrap injected synchronous callables. They do not install or
 validate an OpenMed SDK, Strands SDK, model, remote service, or clinical workflow.
-Core has no runtime dependencies. The caller owns permission and clinical state.
+Canonical clinical validation uses jsonschema 4.23.0; core installs no model/SDK.
+Deployment owns permission and clinical state. Provider confidence is advisory;
+the review-only facade does not use it to grant LOCAL or export authority.
 
 ## Normalized extraction state
 
@@ -96,3 +98,4 @@ shapes, missing evidence, normalized values, source attribution, generator
 failures, malformed state, and provider suggestions at the router boundary.
 Passing fixture-backed tests establishes adapter behavior only; validate a real
 provider separately with versioned synthetic inputs before using it in a clinic.
+

@@ -1,5 +1,10 @@
 # Safety model
 
+Current main 0.1.1.dev1: the original [SAFETY_BOUNDARIES.md](SAFETY_BOUNDARIES.md)
+and six-task catalog are restored. Native confidence is advisory, model auto and
+cloud calls are disabled, moderate/unknown/high risk and missing evidence lock
+human review. No metadata assertion can grant calibration or export permission.
+
 MedSystem1 separates **prediction confidence** from **permission to act**.
 
 ## Core invariants
@@ -25,7 +30,8 @@ The callable adapters allow finite numeric confidence strings from upstream
 payloads but reject booleans and out-of-range/non-finite scores. An absent
 extraction confidence remains unknown (`None`).
 
-The default thresholds are policy settings, not calibrated clinical guarantees.
+The default thresholds are retained API settings, not calibrated guarantees or
+authorization; this slice never issues LOCAL or ESCALATE. See docs/API_MIGRATION.md.
 
 ## High-risk capability examples
 
@@ -40,3 +46,4 @@ Examples and benchmark cases in this repository are synthetic unless explicitly 
 ## Status
 
 v0.1 is alpha research/developer infrastructure. It has not been clinically validated or cleared/approved as a medical device.
+

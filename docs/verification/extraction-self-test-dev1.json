@@ -1,0 +1,450 @@
+{
+  "scope": "synthetic_extraction_evaluation",
+  "mode": "fixture_replay_self_test",
+  "provider_label": "gold_fixture_replay_no_model",
+  "metrics": {
+    "total_cases": 24,
+    "exact_cases": 24,
+    "failed_cases": 0,
+    "output_error_cases": 0,
+    "case_exact_match_rate": 1.0,
+    "expected_facts": 28,
+    "valid_predicted_facts": 28,
+    "matched_facts": 28,
+    "supported_facts": 28,
+    "fact_match": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "supported_match": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "coverage": {
+    "correction": {
+      "total_cases": 5,
+      "exact_cases": 5,
+      "failed_cases": 0,
+      "output_error_cases": 0,
+      "case_exact_match_rate": 1.0,
+      "expected_facts": 5,
+      "valid_predicted_facts": 5,
+      "matched_facts": 5,
+      "supported_facts": 5,
+      "fact_match": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "supported_match": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "duration": {
+      "total_cases": 4,
+      "exact_cases": 4,
+      "failed_cases": 0,
+      "output_error_cases": 0,
+      "case_exact_match_rate": 1.0,
+      "expected_facts": 6,
+      "valid_predicted_facts": 6,
+      "matched_facts": 6,
+      "supported_facts": 6,
+      "fact_match": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "supported_match": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "laterality": {
+      "total_cases": 5,
+      "exact_cases": 5,
+      "failed_cases": 0,
+      "output_error_cases": 0,
+      "case_exact_match_rate": 1.0,
+      "expected_facts": 4,
+      "valid_predicted_facts": 4,
+      "matched_facts": 4,
+      "supported_facts": 4,
+      "fact_match": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "supported_match": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "negation": {
+      "total_cases": 4,
+      "exact_cases": 4,
+      "failed_cases": 0,
+      "output_error_cases": 0,
+      "case_exact_match_rate": 1.0,
+      "expected_facts": 5,
+      "valid_predicted_facts": 5,
+      "matched_facts": 5,
+      "supported_facts": 5,
+      "fact_match": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "supported_match": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "numeric": {
+      "total_cases": 6,
+      "exact_cases": 6,
+      "failed_cases": 0,
+      "output_error_cases": 0,
+      "case_exact_match_rate": 1.0,
+      "expected_facts": 8,
+      "valid_predicted_facts": 8,
+      "matched_facts": 8,
+      "supported_facts": 8,
+      "fact_match": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "supported_match": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "extract-oph-001",
+      "dimension": "laterality",
+      "task": "extract_laterality",
+      "expected_facts": 1,
+      "predicted_facts": 1,
+      "matched_facts": 1,
+      "supported_facts": 1,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-002",
+      "dimension": "laterality",
+      "task": "extract_laterality",
+      "expected_facts": 1,
+      "predicted_facts": 1,
+      "matched_facts": 1,
+      "supported_facts": 1,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-003",
+      "dimension": "laterality",
+      "task": "extract_laterality",
+      "expected_facts": 1,
+      "predicted_facts": 1,
+      "matched_facts": 1,
+      "supported_facts": 1,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-004",
+      "dimension": "laterality",
+      "task": "extract_laterality",
+      "expected_facts": 0,
+      "predicted_facts": 0,
+      "matched_facts": 0,
+      "supported_facts": 0,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-005",
+      "dimension": "laterality",
+      "task": "extract_laterality",
+      "expected_facts": 1,
+      "predicted_facts": 1,
+      "matched_facts": 1,
+      "supported_facts": 1,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-006",
+      "dimension": "negation",
+      "task": "extract_negation",
+      "expected_facts": 1,
+      "predicted_facts": 1,
+      "matched_facts": 1,
+      "supported_facts": 1,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-007",
+      "dimension": "negation",
+      "task": "extract_negation",
+      "expected_facts": 2,
+      "predicted_facts": 2,
+      "matched_facts": 2,
+      "supported_facts": 2,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-008",
+      "dimension": "negation",
+      "task": "extract_negation",
+      "expected_facts": 2,
+      "predicted_facts": 2,
+      "matched_facts": 2,
+      "supported_facts": 2,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-009",
+      "dimension": "negation",
+      "task": "extract_negation",
+      "expected_facts": 0,
+      "predicted_facts": 0,
+      "matched_facts": 0,
+      "supported_facts": 0,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-010",
+      "dimension": "duration",
+      "task": "extract_duration",
+      "expected_facts": 2,
+      "predicted_facts": 2,
+      "matched_facts": 2,
+      "supported_facts": 2,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-011",
+      "dimension": "duration",
+      "task": "extract_duration",
+      "expected_facts": 2,
+      "predicted_facts": 2,
+      "matched_facts": 2,
+      "supported_facts": 2,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-012",
+      "dimension": "duration",
+      "task": "extract_duration",
+      "expected_facts": 2,
+      "predicted_facts": 2,
+      "matched_facts": 2,
+      "supported_facts": 2,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-013",
+      "dimension": "duration",
+      "task": "extract_duration",
+      "expected_facts": 0,
+      "predicted_facts": 0,
+      "matched_facts": 0,
+      "supported_facts": 0,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-014",
+      "dimension": "correction",
+      "task": "resolve_correction",
+      "expected_facts": 1,
+      "predicted_facts": 1,
+      "matched_facts": 1,
+      "supported_facts": 1,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-015",
+      "dimension": "correction",
+      "task": "resolve_correction",
+      "expected_facts": 1,
+      "predicted_facts": 1,
+      "matched_facts": 1,
+      "supported_facts": 1,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-016",
+      "dimension": "correction",
+      "task": "resolve_correction",
+      "expected_facts": 2,
+      "predicted_facts": 2,
+      "matched_facts": 2,
+      "supported_facts": 2,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-017",
+      "dimension": "correction",
+      "task": "resolve_correction",
+      "expected_facts": 1,
+      "predicted_facts": 1,
+      "matched_facts": 1,
+      "supported_facts": 1,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-018",
+      "dimension": "correction",
+      "task": "resolve_correction",
+      "expected_facts": 0,
+      "predicted_facts": 0,
+      "matched_facts": 0,
+      "supported_facts": 0,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-019",
+      "dimension": "numeric",
+      "task": "extract_iop",
+      "expected_facts": 2,
+      "predicted_facts": 2,
+      "matched_facts": 2,
+      "supported_facts": 2,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-020",
+      "dimension": "numeric",
+      "task": "extract_iop",
+      "expected_facts": 1,
+      "predicted_facts": 1,
+      "matched_facts": 1,
+      "supported_facts": 1,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-021",
+      "dimension": "numeric",
+      "task": "extract_iop",
+      "expected_facts": 2,
+      "predicted_facts": 2,
+      "matched_facts": 2,
+      "supported_facts": 2,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-022",
+      "dimension": "numeric",
+      "task": "extract_visual_acuity",
+      "expected_facts": 2,
+      "predicted_facts": 2,
+      "matched_facts": 2,
+      "supported_facts": 2,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-023",
+      "dimension": "numeric",
+      "task": "extract_visual_acuity",
+      "expected_facts": 1,
+      "predicted_facts": 1,
+      "matched_facts": 1,
+      "supported_facts": 1,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    },
+    {
+      "id": "extract-oph-024",
+      "dimension": "numeric",
+      "task": "extract_iop",
+      "expected_facts": 0,
+      "predicted_facts": 0,
+      "matched_facts": 0,
+      "supported_facts": 0,
+      "exact_match": true,
+      "unexpected_facts": 0,
+      "missing_facts": 0,
+      "unsupported_matches": 0
+    }
+  ],
+  "package_version": "0.1.1.dev1",
+  "fixture_schema_version": "0.1",
+  "fixture_sha256": "709ed88c635464dc222fdd0e9950b571d1d29bbcbcb5983398df7db9cf862a5d"
+}

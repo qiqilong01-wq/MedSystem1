@@ -1,0 +1,2634 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.medsystem1.invalid/v0.1/decision.schema.json",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "const": "laterality"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "left",
+                "right",
+                "bilateral",
+                "unknown",
+                "conflicting"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "review_required",
+            "abstained",
+            "blocked"
+          ]
+        },
+        "risk": {
+          "enum": [
+            "low",
+            "moderate",
+            "high",
+            "unknown"
+          ]
+        },
+        "route": {
+          "enum": [
+            "rules",
+            "local_auto",
+            "frontier_fallback",
+            "human_review",
+            "abstain",
+            "blocked"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "deterministic_match",
+              "rule_missing_fields",
+              "risk_requires_review",
+              "urgency_review_only",
+              "uncalibrated",
+              "low_confidence",
+              "capability_missing",
+              "cloud_disabled",
+              "privacy_not_cleared",
+              "provider_timeout",
+              "provider_error",
+              "invalid_provider_output",
+              "input_conflict",
+              "input_truncated",
+              "out_of_domain",
+              "missing_evidence",
+              "forbidden_scope",
+              "calibration_mismatch",
+              "fallback_used",
+              "no_result",
+              "validated_local_result",
+              "observability_degraded"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true
+        },
+        "confidence": {
+          "type": "object",
+          "properties": {
+            "native_score": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "selected_probability": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "calibrated_probability": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "calibration_status": {
+              "enum": [
+                "not_available",
+                "validated",
+                "mismatch"
+              ]
+            },
+            "artifact_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "native_score",
+            "selected_probability",
+            "calibrated_probability",
+            "calibration_status",
+            "artifact_id"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "validated"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "calibrated_probability": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "artifact_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "calibrated_probability": {
+                    "type": "null"
+                  },
+                  "artifact_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "source_id",
+              "start",
+              "end"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 20
+        }
+      },
+      "required": [
+        "task_id",
+        "value",
+        "status",
+        "risk",
+        "route",
+        "reason_codes",
+        "confidence",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "risk": {
+                "const": "low"
+              },
+              "route": {
+                "enum": [
+                  "rules",
+                  "local_auto"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "rules",
+                  "local_auto"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "human_review",
+                  "frontier_fallback"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "review_required"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "abstain"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "abstained"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "const": "blocked"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "abstained"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "const": "abstain"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "review_required"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "human_review",
+                  "frontier_fallback"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "risk": {
+                "enum": [
+                  "moderate",
+                  "high",
+                  "unknown"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "review_required",
+                  "blocked"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "local_auto"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "confidence": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "validated"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "enum": [
+                  "left",
+                  "right",
+                  "bilateral",
+                  "unknown",
+                  "conflicting"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "const": "temporal_classification"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "recent",
+                "longstanding",
+                "longstanding_with_recent_change",
+                "unknown",
+                "conflicting"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "review_required",
+            "abstained",
+            "blocked"
+          ]
+        },
+        "risk": {
+          "enum": [
+            "low",
+            "moderate",
+            "high",
+            "unknown"
+          ]
+        },
+        "route": {
+          "enum": [
+            "rules",
+            "local_auto",
+            "frontier_fallback",
+            "human_review",
+            "abstain",
+            "blocked"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "deterministic_match",
+              "rule_missing_fields",
+              "risk_requires_review",
+              "urgency_review_only",
+              "uncalibrated",
+              "low_confidence",
+              "capability_missing",
+              "cloud_disabled",
+              "privacy_not_cleared",
+              "provider_timeout",
+              "provider_error",
+              "invalid_provider_output",
+              "input_conflict",
+              "input_truncated",
+              "out_of_domain",
+              "missing_evidence",
+              "forbidden_scope",
+              "calibration_mismatch",
+              "fallback_used",
+              "no_result",
+              "validated_local_result",
+              "observability_degraded"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true
+        },
+        "confidence": {
+          "type": "object",
+          "properties": {
+            "native_score": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "selected_probability": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "calibrated_probability": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "calibration_status": {
+              "enum": [
+                "not_available",
+                "validated",
+                "mismatch"
+              ]
+            },
+            "artifact_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "native_score",
+            "selected_probability",
+            "calibrated_probability",
+            "calibration_status",
+            "artifact_id"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "validated"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "calibrated_probability": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "artifact_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "calibrated_probability": {
+                    "type": "null"
+                  },
+                  "artifact_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "source_id",
+              "start",
+              "end"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 20
+        }
+      },
+      "required": [
+        "task_id",
+        "value",
+        "status",
+        "risk",
+        "route",
+        "reason_codes",
+        "confidence",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "risk": {
+                "const": "low"
+              },
+              "route": {
+                "enum": [
+                  "rules",
+                  "local_auto"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "rules",
+                  "local_auto"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "human_review",
+                  "frontier_fallback"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "review_required"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "abstain"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "abstained"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "const": "blocked"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "abstained"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "const": "abstain"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "review_required"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "human_review",
+                  "frontier_fallback"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "risk": {
+                "enum": [
+                  "moderate",
+                  "high",
+                  "unknown"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "review_required",
+                  "blocked"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "local_auto"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "confidence": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "validated"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "enum": [
+                  "recent",
+                  "longstanding",
+                  "longstanding_with_recent_change",
+                  "unknown",
+                  "conflicting"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "const": "photopsia"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "present",
+                "absent",
+                "unknown",
+                "conflicting"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "review_required",
+            "abstained",
+            "blocked"
+          ]
+        },
+        "risk": {
+          "enum": [
+            "low",
+            "moderate",
+            "high",
+            "unknown"
+          ]
+        },
+        "route": {
+          "enum": [
+            "rules",
+            "local_auto",
+            "frontier_fallback",
+            "human_review",
+            "abstain",
+            "blocked"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "deterministic_match",
+              "rule_missing_fields",
+              "risk_requires_review",
+              "urgency_review_only",
+              "uncalibrated",
+              "low_confidence",
+              "capability_missing",
+              "cloud_disabled",
+              "privacy_not_cleared",
+              "provider_timeout",
+              "provider_error",
+              "invalid_provider_output",
+              "input_conflict",
+              "input_truncated",
+              "out_of_domain",
+              "missing_evidence",
+              "forbidden_scope",
+              "calibration_mismatch",
+              "fallback_used",
+              "no_result",
+              "validated_local_result",
+              "observability_degraded"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true
+        },
+        "confidence": {
+          "type": "object",
+          "properties": {
+            "native_score": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "selected_probability": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "calibrated_probability": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "calibration_status": {
+              "enum": [
+                "not_available",
+                "validated",
+                "mismatch"
+              ]
+            },
+            "artifact_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "native_score",
+            "selected_probability",
+            "calibrated_probability",
+            "calibration_status",
+            "artifact_id"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "validated"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "calibrated_probability": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "artifact_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "calibrated_probability": {
+                    "type": "null"
+                  },
+                  "artifact_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "source_id",
+              "start",
+              "end"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 20
+        }
+      },
+      "required": [
+        "task_id",
+        "value",
+        "status",
+        "risk",
+        "route",
+        "reason_codes",
+        "confidence",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "risk": {
+                "const": "low"
+              },
+              "route": {
+                "enum": [
+                  "rules",
+                  "local_auto"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "rules",
+                  "local_auto"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "human_review",
+                  "frontier_fallback"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "review_required"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "abstain"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "abstained"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "const": "blocked"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "abstained"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "const": "abstain"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "review_required"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "human_review",
+                  "frontier_fallback"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "risk": {
+                "enum": [
+                  "moderate",
+                  "high",
+                  "unknown"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "review_required",
+                  "blocked"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "local_auto"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "confidence": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "validated"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown",
+                  "conflicting"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "const": "floaters"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "present",
+                "absent",
+                "unknown",
+                "conflicting"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "review_required",
+            "abstained",
+            "blocked"
+          ]
+        },
+        "risk": {
+          "enum": [
+            "low",
+            "moderate",
+            "high",
+            "unknown"
+          ]
+        },
+        "route": {
+          "enum": [
+            "rules",
+            "local_auto",
+            "frontier_fallback",
+            "human_review",
+            "abstain",
+            "blocked"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "deterministic_match",
+              "rule_missing_fields",
+              "risk_requires_review",
+              "urgency_review_only",
+              "uncalibrated",
+              "low_confidence",
+              "capability_missing",
+              "cloud_disabled",
+              "privacy_not_cleared",
+              "provider_timeout",
+              "provider_error",
+              "invalid_provider_output",
+              "input_conflict",
+              "input_truncated",
+              "out_of_domain",
+              "missing_evidence",
+              "forbidden_scope",
+              "calibration_mismatch",
+              "fallback_used",
+              "no_result",
+              "validated_local_result",
+              "observability_degraded"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true
+        },
+        "confidence": {
+          "type": "object",
+          "properties": {
+            "native_score": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "selected_probability": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "calibrated_probability": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "calibration_status": {
+              "enum": [
+                "not_available",
+                "validated",
+                "mismatch"
+              ]
+            },
+            "artifact_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "native_score",
+            "selected_probability",
+            "calibrated_probability",
+            "calibration_status",
+            "artifact_id"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "validated"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "calibrated_probability": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "artifact_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "calibrated_probability": {
+                    "type": "null"
+                  },
+                  "artifact_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "source_id",
+              "start",
+              "end"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 20
+        }
+      },
+      "required": [
+        "task_id",
+        "value",
+        "status",
+        "risk",
+        "route",
+        "reason_codes",
+        "confidence",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "risk": {
+                "const": "low"
+              },
+              "route": {
+                "enum": [
+                  "rules",
+                  "local_auto"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "rules",
+                  "local_auto"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "human_review",
+                  "frontier_fallback"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "review_required"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "abstain"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "abstained"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "const": "blocked"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "abstained"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "const": "abstain"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "review_required"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "human_review",
+                  "frontier_fallback"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "risk": {
+                "enum": [
+                  "moderate",
+                  "high",
+                  "unknown"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "review_required",
+                  "blocked"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "local_auto"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "confidence": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "validated"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown",
+                  "conflicting"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "const": "missing_fields"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "laterality",
+                  "symptom_duration",
+                  "visual_acuity",
+                  "examination"
+                ]
+              },
+              "minItems": 0,
+              "maxItems": 4,
+              "uniqueItems": true
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "review_required",
+            "abstained",
+            "blocked"
+          ]
+        },
+        "risk": {
+          "enum": [
+            "low",
+            "moderate",
+            "high",
+            "unknown"
+          ]
+        },
+        "route": {
+          "enum": [
+            "rules",
+            "local_auto",
+            "frontier_fallback",
+            "human_review",
+            "abstain",
+            "blocked"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "deterministic_match",
+              "rule_missing_fields",
+              "risk_requires_review",
+              "urgency_review_only",
+              "uncalibrated",
+              "low_confidence",
+              "capability_missing",
+              "cloud_disabled",
+              "privacy_not_cleared",
+              "provider_timeout",
+              "provider_error",
+              "invalid_provider_output",
+              "input_conflict",
+              "input_truncated",
+              "out_of_domain",
+              "missing_evidence",
+              "forbidden_scope",
+              "calibration_mismatch",
+              "fallback_used",
+              "no_result",
+              "validated_local_result",
+              "observability_degraded"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true
+        },
+        "confidence": {
+          "type": "object",
+          "properties": {
+            "native_score": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "selected_probability": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "calibrated_probability": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "calibration_status": {
+              "enum": [
+                "not_available",
+                "validated",
+                "mismatch"
+              ]
+            },
+            "artifact_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "native_score",
+            "selected_probability",
+            "calibrated_probability",
+            "calibration_status",
+            "artifact_id"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "validated"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "calibrated_probability": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "artifact_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "calibrated_probability": {
+                    "type": "null"
+                  },
+                  "artifact_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "source_id",
+              "start",
+              "end"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 20
+        }
+      },
+      "required": [
+        "task_id",
+        "value",
+        "status",
+        "risk",
+        "route",
+        "reason_codes",
+        "confidence",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "risk": {
+                "const": "low"
+              },
+              "route": {
+                "enum": [
+                  "rules",
+                  "local_auto"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "rules",
+                  "local_auto"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "human_review",
+                  "frontier_fallback"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "review_required"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "abstain"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "abstained"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "const": "blocked"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "abstained"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "const": "abstain"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "review_required"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "human_review",
+                  "frontier_fallback"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "risk": {
+                "enum": [
+                  "moderate",
+                  "high",
+                  "unknown"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "review_required",
+                  "blocked"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "local_auto"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "confidence": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "validated"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "laterality",
+                    "symptom_duration",
+                    "visual_acuity",
+                    "examination"
+                  ]
+                },
+                "minItems": 0,
+                "maxItems": 4,
+                "uniqueItems": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "const": "urgency_to_review"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "needs_review",
+                "unknown"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "review_required",
+            "abstained",
+            "blocked"
+          ]
+        },
+        "risk": {
+          "enum": [
+            "low",
+            "moderate",
+            "high",
+            "unknown"
+          ]
+        },
+        "route": {
+          "enum": [
+            "rules",
+            "local_auto",
+            "frontier_fallback",
+            "human_review",
+            "abstain",
+            "blocked"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "deterministic_match",
+              "rule_missing_fields",
+              "risk_requires_review",
+              "urgency_review_only",
+              "uncalibrated",
+              "low_confidence",
+              "capability_missing",
+              "cloud_disabled",
+              "privacy_not_cleared",
+              "provider_timeout",
+              "provider_error",
+              "invalid_provider_output",
+              "input_conflict",
+              "input_truncated",
+              "out_of_domain",
+              "missing_evidence",
+              "forbidden_scope",
+              "calibration_mismatch",
+              "fallback_used",
+              "no_result",
+              "validated_local_result",
+              "observability_degraded"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true
+        },
+        "confidence": {
+          "type": "object",
+          "properties": {
+            "native_score": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "selected_probability": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "calibrated_probability": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "calibration_status": {
+              "enum": [
+                "not_available",
+                "validated",
+                "mismatch"
+              ]
+            },
+            "artifact_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "native_score",
+            "selected_probability",
+            "calibrated_probability",
+            "calibration_status",
+            "artifact_id"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "validated"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "calibrated_probability": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "artifact_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "calibrated_probability": {
+                    "type": "null"
+                  },
+                  "artifact_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "source_id",
+              "start",
+              "end"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 20
+        }
+      },
+      "required": [
+        "task_id",
+        "value",
+        "status",
+        "risk",
+        "route",
+        "reason_codes",
+        "confidence",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "risk": {
+                "const": "low"
+              },
+              "route": {
+                "enum": [
+                  "rules",
+                  "local_auto"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "rules",
+                  "local_auto"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "human_review",
+                  "frontier_fallback"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "review_required"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "abstain"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "abstained"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "const": "blocked"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "abstained"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "const": "abstain"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "review_required"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route": {
+                "enum": [
+                  "human_review",
+                  "frontier_fallback"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "risk": {
+                "enum": [
+                  "moderate",
+                  "high",
+                  "unknown"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "review_required",
+                  "blocked"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route": {
+                "const": "local_auto"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "confidence": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "validated"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "status": {
+              "enum": [
+                "review_required",
+                "abstained",
+                "blocked"
+              ]
+            },
+            "risk": {
+              "enum": [
+                "moderate",
+                "high",
+                "unknown"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "enum": [
+                  "needs_review",
+                  "unknown"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

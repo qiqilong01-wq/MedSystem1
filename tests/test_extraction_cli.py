@@ -32,7 +32,7 @@ def predictions(tmp_path, rows):
 
 
 def test_recorded_prediction_requires_identity_and_fails_for_missing_cases(tmp_path):
-    row = json.loads(GOLD.read_text().splitlines()[0])
+    row = json.loads(GOLD.read_text(encoding="utf-8").splitlines()[0])
     path = predictions(tmp_path, [{"id": row["id"], "facts": row["expected"]}])
     assert run("--predictions", path).returncode == 2
     result = run("--predictions", path, "--provider-label", "fake-provider@1")
@@ -70,7 +70,7 @@ def test_invalid_gold_cannot_pass_self_test(tmp_path, content):
 
 
 def test_missing_reference_evidence_is_rejected(tmp_path):
-    row = json.loads(GOLD.read_text().splitlines()[0])
+    row = json.loads(GOLD.read_text(encoding="utf-8").splitlines()[0])
     row["expected"][0].pop("evidence")
     path = tmp_path / "unsupported-gold.jsonl"
     path.write_text(json.dumps(row), encoding="utf-8")
@@ -83,3 +83,4 @@ def test_duplicate_json_fields_are_not_silently_overwritten(tmp_path):
     result = run("--predictions", str(path), "--provider-label", "test")
     assert result.returncode == 2
     assert result.stdout == ""
+

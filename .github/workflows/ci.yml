@@ -22,5 +22,7 @@ jobs:
       - run: python -m pip install --force-reinstall dist/*.whl
       - run: ruff check .
       - run: pytest -q
+      - run: python tools/validate_package.py
       - run: python benchmarks/run_routing.py
       - run: python benchmarks/run_extraction.py --self-test
+

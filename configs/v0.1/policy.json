@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.1.0",
+  "policy_version": "policy-0.1.0",
+  "rules_version": "rules-0.1.0",
+  "prompt_version": "prompts-0.1.0",
+  "local": {
+    "provider": "strands",
+    "endpoint": "http://127.0.0.1:8099",
+    "timeout_ms": 2000,
+    "strict_window": true,
+    "max_concurrency": 1
+  },
+  "frontier": {
+    "enabled": false,
+    "endpoint": null,
+    "model": null,
+    "timeout_ms": 10000,
+    "max_calls": 1,
+    "retry_count": 0
+  },
+  "total_timeout_ms": 15000,
+  "observability": "local_metadata_only",
+  "tasks": {
+    "laterality": {
+      "auto_enabled": false,
+      "confidence_threshold": 0.95
+    },
+    "temporal_classification": {
+      "auto_enabled": false,
+      "confidence_threshold": 0.95
+    },
+    "photopsia": {
+      "auto_enabled": false,
+      "confidence_threshold": 0.95
+    },
+    "floaters": {
+      "auto_enabled": false,
+      "confidence_threshold": 0.95
+    },
+    "missing_fields": {
+      "auto_enabled": false,
+      "confidence_threshold": 0.95
+    },
+    "urgency_to_review": {
+      "auto_enabled": false,
+      "confidence_threshold": 0.95
+    }
+  }
+}
