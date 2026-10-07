@@ -23,3 +23,4 @@ jobs:
       - run: ruff check .
       - run: pytest -q
       - run: python benchmarks/run_routing.py
+      - run: python benchmarks/run_extraction.py --self-test

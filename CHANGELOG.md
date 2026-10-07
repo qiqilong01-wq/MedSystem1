@@ -13,6 +13,8 @@
 - ProviderContractError / ProviderExecutionError and public normalized-state validation.
 - Provider conformance tests including authority boundaries and execution failures.
 - Versioned 30-case synthetic ophthalmology routing-policy regression runner with failure exit codes.
+- Evidence-aware offline extraction evaluator, 24 synthetic gold cases, and a recorded-prediction CLI.
+- Separate factual/source-supported scores, output-error counts, and an explicitly labeled gold-replay self-test.
 
 ### Development
 - Verify distribution metadata and run CI tests against the installed wheel.

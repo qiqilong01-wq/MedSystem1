@@ -99,7 +99,11 @@ pip install -e ".[dev]"
 ruff check .
 pytest -q
 python benchmarks/run_routing.py
+python benchmarks/run_extraction.py --self-test
 ```
+
+The extraction self-test replays synthetic gold to verify the scorer. To score
+recorded provider output, see [offline extraction evaluation](docs/EXTRACTION_EVALUATION.md).
 
 ## Roadmap
 
