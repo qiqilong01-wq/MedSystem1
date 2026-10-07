@@ -26,6 +26,15 @@ Python 3.10+:
 pip install medsystem1
 ```
 
+This command requires a completed PyPI upload. Until the first upload is
+verified, install the GitHub alpha tag:
+
+```bash
+python -m pip install "medsystem1 @ git+https://github.com/qiqilong01-wq/MedSystem1.git@v0.1.0"
+```
+
+Maintainers: see [publishing and recovery](docs/PUBLISHING.md).
+
 ```python
 from medsystem1 import MedSystem1, RouteRequest
 
@@ -94,6 +103,9 @@ pytest -q
 3. Expand the synthetic/de-identified ophthalmology benchmark.
 4. Add audit events and provider conformance tests.
 5. Validate integrations before broader clinical workflows.
+
+See [bounded roadmap and handoff](docs/ROADMAP.md) for current status and the
+next task. Main is an unreleased development line; the v0.1.0 tag stays fixed.
 
 ## License and third-party components
 

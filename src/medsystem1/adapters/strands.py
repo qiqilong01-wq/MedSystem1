@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Callable
 
+from .._validation import provider_confidence
 from ..models import ClinicalState
 
 
@@ -28,7 +29,5 @@ class StrandsDecisionProvider:
 
         if confidence is None:
             raise ValueError("decision provider did not return confidence")
-        confidence = float(confidence)
-        if not 0 <= confidence <= 1:
-            raise ValueError("decision provider confidence must be between 0 and 1")
+        confidence = provider_confidence(confidence)
         return confidence, dict(metadata)
