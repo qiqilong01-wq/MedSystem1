@@ -2,9 +2,9 @@
 
 # API schema v0.1
 
-Schema version 0.1.0 · Spec revision 0.1.3
+Schema version 0.1.0 · Spec revision 0.1.4
 
-Current GitHub 0.1.1.dev2 implements MedSystem1.decide(request_dict) and local
+Current GitHub 0.1.1.dev3 implements MedSystem1.decide(request_dict) and local
 CLI demo/decide using this wire contract. Immutable wire models and whole-source
 rules/review checks are ported. The HTTP endpoints below remain planned on GitHub;
 historical local dev1 HTTP status is not this branch's acceptance evidence.
@@ -78,3 +78,13 @@ Error envelope 为 `{ "schema_version":"0.1.0", "error":{"code":"invalid_request
 ## Compatibility
 
 旧 schema 目录 immutable 发布；新增 enum label 属于 breaking change。所有配置 / calibration artifact 明确绑定 schema + task labels + prompt / model / language。Schema 无法表达事实证据真实支持程度，必须由 validators / guard / benchmark 共同实现，不把 JSON validity 当医学正确性。
+
+## Strands transport slice — 0.1.1.dev3
+
+The separate `StrandsHttpProvider` implements the pinned v19 choice wire contract
+behind a trusted local deployment manifest. See [deployment procedure](docs/STRANDS_DEPLOYMENT.md)
+for exact configuration, source links, opt-in synthetic smoke and remaining gates.
+
+Clinical schemas/v0.1 remain 0.1.0. The new independent administrator contract
+`schemas/deployment/v0.1/local.schema.json` (local-0.1.0) grants no caller fields.
+Canonical decide remains rules-only; no transport/public API truth is duplicated.

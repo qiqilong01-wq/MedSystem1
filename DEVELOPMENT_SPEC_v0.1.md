@@ -2,9 +2,9 @@
 
 # Development specification v0.1
 
-Spec revision 0.1.3 · Coding Agent execution contract · 2026-10-07
+Spec revision 0.1.4 · Coding Agent execution contract · 2026-10-07
 
-GitHub development update: the original M0–M6 scope remains. 0.1.1.dev2 ports
+GitHub development update: the original M0–M6 scope remains. 0.1.1.dev3 ports
 immutable wire models and finite M1 rules/Patient State, adds canonical decide/CLI,
 and preserves review-only legacy model routing. Next implement real Strands and
 full provider/HTTP orchestration under the same boundaries. Current acceptance
@@ -76,3 +76,9 @@ Codex / Claude Code 共用 AGENTS.md，CLAUDE.md 仅指向它。每个 agent 当
 ## Release checklist
 
 Product DoD 逐条有证据链接。记录精确依赖版本、adapter / model / base SHA、strict-window 设置、hardware、language、所有失败数。未验证的能力默认 false；未过自动门槛的 task 继续 review-only。发布软件 tag 前重复核实变更过的依赖 / 模型许可，维护 LICENSE_REVIEW 与 NOTICE。
+
+## Strands transport slice — 0.1.1.dev3
+
+The separate `StrandsHttpProvider` implements the pinned v19 choice wire contract
+behind a trusted local deployment manifest. See [deployment procedure](docs/STRANDS_DEPLOYMENT.md)
+for exact configuration, source links, opt-in synthetic smoke and remaining gates.

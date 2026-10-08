@@ -37,7 +37,7 @@ python -m pip install "medsystem1 @ git+https://github.com/qiqilong01-wq/MedSyst
 
 Maintainers: see [publishing and recovery](docs/PUBLISHING.md).
 
-The example below targets unreleased development version 0.1.1.dev2. The fixed v0.1.0 alpha
+The example below targets unreleased development version 0.1.1.dev3. The fixed v0.1.0 alpha
 retains earlier routing behavior. To use the review-only behavior described here,
 install a checkout of the development branch with `python -m pip install -e .`.
 No new PyPI/stable release is claimed by this change.
@@ -154,3 +154,9 @@ MedSystem1 is licensed under Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOT
 
 Third-party SDKs, models, datasets, weights, and remote services can carry separate terms. MedSystem1 core does not bundle OpenMed or Strands Decider model assets. See [THIRD_PARTY.md](THIRD_PARTY.md).
 
+
+## Strands transport slice — 0.1.1.dev3
+
+The separate `StrandsHttpProvider` implements the pinned v19 choice wire contract
+behind a trusted local deployment manifest. See [deployment procedure](docs/STRANDS_DEPLOYMENT.md)
+for exact configuration, source links, opt-in synthetic smoke and remaining gates.

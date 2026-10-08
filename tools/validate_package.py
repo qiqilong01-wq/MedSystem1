@@ -18,6 +18,18 @@ def main():
     assert set(policy['tasks'])==set(catalog.tasks)
     assert not policy['frontier']['enabled']
     assert all(not item['auto_enabled'] for item in policy['tasks'].values())
+    from medsystem1.core.local_deployment import load_local_deployment
+    deployment=load_local_deployment(ROOT)
+    assert not deployment.settings['enabled']
+    assert deployment.settings['tasks']==[]
+    deployment_schemas,_=schema_registry(ROOT/'schemas/deployment/v0.1')
+    provider_cases=json.loads((ROOT/'examples/ophthalmology/strands-smoke.synthetic.json').read_text(encoding='utf-8'))['cases']
+    assert len(provider_cases)==10 and len({c['case_id'] for c in provider_cases})==10
+    for case in provider_cases:
+        task=case['task_id']
+        assert task in ('laterality','temporal_classification','photopsia','floaters')
+        assert case['expected_label'] in catalog.tasks[task].labels
+        assert isinstance(case['state'],str) and case['state']
     request=json.loads((ROOT/'examples/ophthalmology/request.json').read_text(encoding='utf-8'))
     response=json.loads((ROOT/'examples/ophthalmology/response.json').read_text(encoding='utf-8'))
     validate_response(response,request,schema_dir)
@@ -39,7 +51,7 @@ def main():
               'DEVELOPMENT_SPEC_v0.1.md','API_SCHEMA.md','BENCHMARK_SPEC.md',
               'SAFETY_BOUNDARIES.md','AGENTS.md','CHANGELOG.md')
     assert all((ROOT/name).is_file() for name in required)
-    print(f'PASS: {len(schemas)} schemas, six-task catalog, default model/cloud off, {cases} synthetic fixtures')
+    print(f'PASS: {len(schemas)} clinical + {len(deployment_schemas)} deployment schemas, six-task catalog, default model/cloud off, {cases} executed rules fixtures, 10 unexecuted provider fixtures')
 
 
 if __name__=='__main__':

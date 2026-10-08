@@ -1,0 +1,275 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.medsystem1.invalid/deployment/v0.1/local.schema.json",
+  "type": "object",
+  "properties": {
+    "deployment_version": {
+      "const": "local-0.1.0"
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "verified": {
+      "type": "boolean"
+    },
+    "endpoint": {
+      "type": "string",
+      "pattern": "^http://127\\.0\\.0\\.1:[0-9]{1,5}$"
+    },
+    "model_id": {
+      "const": "StrandsAgents/strands-decider-2B-hobson-v19"
+    },
+    "base_id": {
+      "const": "Qwen/Qwen3.5-2B-Base"
+    },
+    "expected_model_name": {
+      "const": "strands-decider-2B-hobson-v19"
+    },
+    "code_revision": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "model_revision": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "base_revision": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "strict_window": {
+      "const": true
+    },
+    "prefix_cache": {
+      "const": false
+    },
+    "max_concurrency": {
+      "const": 1
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "laterality",
+          "temporal_classification",
+          "photopsia",
+          "floaters"
+        ]
+      },
+      "uniqueItems": true,
+      "maxItems": 4
+    },
+    "attestation": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "artifact_sha256": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "model": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "base": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "code",
+                "model",
+                "base"
+              ],
+              "additionalProperties": false
+            },
+            "runtime_versions": {
+              "type": "object",
+              "minProperties": 1,
+              "maxProperties": 100,
+              "propertyNames": {
+                "pattern": "^[a-zA-Z0-9_.-]{1,128}$"
+              },
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "launch_verified": {
+              "const": true
+            }
+          },
+          "required": [
+            "artifact_sha256",
+            "runtime_versions",
+            "launch_verified"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "deployment_version",
+    "enabled",
+    "verified",
+    "endpoint",
+    "model_id",
+    "base_id",
+    "expected_model_name",
+    "code_revision",
+    "model_revision",
+    "base_revision",
+    "strict_window",
+    "prefix_cache",
+    "max_concurrency",
+    "tasks",
+    "attestation"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "enabled": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "verified": {
+            "const": true
+          },
+          "code_revision": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "model_revision": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "base_revision": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "laterality",
+                "temporal_classification",
+                "photopsia",
+                "floaters"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 4,
+            "minItems": 1
+          },
+          "attestation": {
+            "type": "object",
+            "properties": {
+              "artifact_sha256": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "model": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "base": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "code",
+                  "model",
+                  "base"
+                ],
+                "additionalProperties": false
+              },
+              "runtime_versions": {
+                "type": "object",
+                "minProperties": 1,
+                "maxProperties": 100,
+                "propertyNames": {
+                  "pattern": "^[a-zA-Z0-9_.-]{1,128}$"
+                },
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "launch_verified": {
+                "const": true
+              }
+            },
+            "required": [
+              "artifact_sha256",
+              "runtime_versions",
+              "launch_verified"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "verified": {
+            "const": false
+          },
+          "tasks": {
+            "maxItems": 0
+          },
+          "attestation": {
+            "type": "null"
+          },
+          "code_revision": {
+            "type": "null"
+          },
+          "model_revision": {
+            "type": "null"
+          },
+          "base_revision": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ]
+}

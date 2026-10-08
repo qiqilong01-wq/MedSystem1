@@ -2,13 +2,13 @@
 
 # Technical specification v0.1
 
-Spec revision 0.1.3 · Schema version 0.1.0 · Runtime target 0.1.0
+Spec revision 0.1.4 · Schema version 0.1.0 · Runtime target 0.1.0
 
-GitHub implementation update (0.1.1.dev2): immutable wire models, request-scoped
+GitHub implementation update (0.1.1.dev3): immutable wire models, request-scoped
 normalization, finite grammar/preflight, rules/review envelope and local CLI are
 ported. The library exposes canonical decide separately from advisory route.
 The pure policy kernel uses str/Enum for Python 3.10 compatibility; its contexts
-are internal trusted state, not HTTP requests. Provider/HTTP/frontier integration
+are internal trusted state, not HTTP requests. Provider orchestration/HTTP decide API/frontier integration
 and calibration remain pending. Historical local implementation notes below are
 migration sources; current acceptance is docs/IMPLEMENTATION_STATUS.md.
 
@@ -117,3 +117,9 @@ error message 返回固定 error code，不回显输入或 provider 原文。req
 Schema + semantic validators + code behavior 是实现真源；文档冲突要作为 defect 修复，不能靠“文档优先”跳过安全边界。版本分别记录 schema=0.1.0、spec=0.1.0、policy、rules、prompt、software、provider+model+base、calibration。不可变版本 ID 加内容 hash。
 
 新增 label / 字段 / 必填规则影响客户端：更新 Schema revision、fixtures、contracts、docs、CHANGELOG；不能原地改旧版本目录并仍保留旧 artifact ID。v0.1 内 breaking change 使用新 schema version（0.2.0）并明确 migration；纯措辞修订可升 spec patch。`additionalProperties=false` 杜绝 silent extension。
+
+## Strands transport slice — 0.1.1.dev3
+
+The separate `StrandsHttpProvider` implements the pinned v19 choice wire contract
+behind a trusted local deployment manifest. See [deployment procedure](docs/STRANDS_DEPLOYMENT.md)
+for exact configuration, source links, opt-in synthetic smoke and remaining gates.

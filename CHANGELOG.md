@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.1.dev3 — 2026-10-08 (unreleased)
+
+- Add separate canonical bounded-provider protocol and pinned v19 loopback HTTP
+  adapter, retaining the legacy callable adapter. Trusted catalog owns questions.
+- Add immutable administrator deployment manifest/schema, exact revision checks,
+  required launch/checksum attestations and default-disabled packaged config.
+- Reject redirects, duplicate JSON, invalid probabilities/envelopes, wrong health
+  identity/cache settings, oversized input/output, retries and unsupported tasks.
+- Serialize same-endpoint calls within this process; include queue/health/inference
+  in the deadline. Return candidates without evidence, calibrated scores or grants.
+- Add ten original synthetic smoke fixtures and an explicit opt-in runner;
+  installation/ordinary tests never load models or invoke that runner against a model.
+- Recheck pinned code/model license sources; record inferred upstream base SHA
+  separately from verified deployment state. Real M2 acceptance remains pending.
+
 ## 0.1.1.dev2 — 2026-10-08 (unreleased)
 
 - Port original immutable Schema-backed wire models and request-scoped Patient State;

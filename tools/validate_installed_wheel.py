@@ -6,6 +6,9 @@ from unittest.mock import patch
 import medsystem1
 from medsystem1 import MedSystem1, RequestModel, ResponseModel
 from medsystem1.core.rules_engine import metadata_event
+from medsystem1.core.local_deployment import load_local_deployment
+from medsystem1.adapters.strands_http import StrandsHttpProvider
+from medsystem1.bounded import BoundedProviderError
 from medsystem1.policy import _resource_root
 
 
@@ -15,6 +18,13 @@ def main():
     root=_resource_root()
     request=json.loads(root.joinpath('examples/ophthalmology/request.json').read_text(encoding='utf-8'))
     with patch('socket.socket',side_effect=AssertionError('network forbidden')):
+        deployment=load_local_deployment(root)
+        assert not deployment.settings['enabled']
+        try:
+            StrandsHttpProvider(deployment)
+            raise AssertionError('disabled provider constructed')
+        except BoundedProviderError as error:
+            assert error.code=='capability_missing'
         system=MedSystem1()
         high=system.decide(request)
         assert high['review_required'] and len(high['results'])==6
