@@ -1,4 +1,4 @@
-"""Canonical local rules CLI: stdout results, stderr metadata; no providers."""
+"""Canonical local CLI: default rules, optional administrator deployment, no cloud."""
 import argparse
 import json
 from pathlib import Path
@@ -9,6 +9,7 @@ from jsonschema.exceptions import ValidationError
 
 from .core.config import load_bundle
 from .core.rules_engine import evaluate_rules, metadata_event
+from .core.orchestrator import build_local_runtime, evaluate
 from .contracts import parse_request_json
 from .errors import DecisionRequestError
 from .policy import _resource_root
@@ -18,6 +19,8 @@ def main(argv=None):
     parser=argparse.ArgumentParser(prog='medsystem1')
     parser.add_argument('--project-root',type=Path,default=_resource_root(),
                         help='administrator-owned source/config root; never a request field')
+    parser.add_argument('--deployment',type=Path,
+                        help='administrator opt-in local manifest; absent means no provider calls')
     commands=parser.add_subparsers(dest='command',required=True)
     commands.add_parser('demo',help='run packaged synthetic ophthalmology input with local rules')
     decide=commands.add_parser('decide',help='compute canonical JSON request with local rules')
@@ -26,12 +29,14 @@ def main(argv=None):
     path=args.project_root/'examples/ophthalmology/request.json' if args.command=='demo' else args.input
     try:
         bundle=load_bundle(args.project_root)
+        runtime=build_local_runtime(args.project_root,args.deployment,bundle=bundle) if args.deployment else None
     except Exception:
         return _error('service_unavailable')
     try:
         request=parse_request_json(path.read_text(encoding='utf-8-sig'))
-        response=evaluate_rules(request,args.project_root,bundle=bundle)
-    except (ValidationError,ValueError,TypeError,KeyError,DecisionRequestError):
+        response=(evaluate(request,args.project_root,bundle=bundle,runtime=runtime)
+                  if runtime is not None else evaluate_rules(request,args.project_root,bundle=bundle))
+    except (ValidationError,ValueError,TypeError,KeyError,RecursionError,DecisionRequestError):
         return _error('invalid_request')
     except Exception:
         return _error('service_unavailable')

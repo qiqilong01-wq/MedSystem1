@@ -27,7 +27,7 @@ class LocalDeployment:
         return json.loads(self._catalog_json)
 
 
-def load_local_deployment(root: Path, path: Path | None = None) -> LocalDeployment:
+def load_local_deployment(root: Path, path: Path | None = None, *, bundle=None) -> LocalDeployment:
     """root/path are deployment-owned, never fields of a clinical request.
 
     Attestations are administrator assertions about independently checked local
@@ -42,7 +42,7 @@ def load_local_deployment(root: Path, path: Path | None = None) -> LocalDeployme
         validate_schema(config, 'local.schema.json', root/'schemas/deployment/v0.1')
         if not 1 <= urlsplit(config['endpoint']).port <= 65535:
             raise ValueError('deployment_endpoint')
-        bundle = load_bundle(root)
+        bundle = bundle or load_bundle(root)
         registry = parse_request_json((root/'configs/v0.1/providers.json').read_bytes())['strands']
         if config['enabled']:
             if (config['code_revision'] != registry['code_revision']

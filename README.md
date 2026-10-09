@@ -37,7 +37,7 @@ python -m pip install "medsystem1 @ git+https://github.com/qiqilong01-wq/MedSyst
 
 Maintainers: see [publishing and recovery](docs/PUBLISHING.md).
 
-The example below targets unreleased development version 0.1.1.dev3. The fixed v0.1.0 alpha
+The example below targets unreleased development version 0.1.1.dev4. The fixed v0.1.0 alpha
 retains earlier routing behavior. To use the review-only behavior described here,
 install a checkout of the development branch with `python -m pip install -e .`.
 No new PyPI/stable release is claimed by this change.
@@ -160,3 +160,14 @@ Third-party SDKs, models, datasets, weights, and remote services can carry separ
 The separate `StrandsHttpProvider` implements the pinned v19 choice wire contract
 behind a trusted local deployment manifest. See [deployment procedure](docs/STRANDS_DEPLOYMENT.md)
 for exact configuration, source links, opt-in synthetic smoke and remaining gates.
+
+## Local orchestration slice — 0.1.1.dev4
+
+Default decide/CLI still invoke only rules. An administrator may explicitly bind
+a validated local deployment to the canonical interface. Known facts bypass
+inference; whole-input/urgency review locks prevent every provider call. Only
+low-risk authorized unknown labels receive review-only local candidates.
+Core independently checks pinned identity, task order, probabilities and candidate
+shape; scores never grant calibration, evidence, cloud export or auto approval.
+Model disagreement removes the candidate value/evidence and elevates review.
+See [local orchestration contract](docs/LOCAL_ORCHESTRATION.md).

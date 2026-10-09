@@ -2,13 +2,14 @@
 
 # API schema v0.1
 
-Schema version 0.1.0 · Spec revision 0.1.4
+Schema version 0.1.0 · Spec revision 0.1.5
 
-Current GitHub 0.1.1.dev3 implements MedSystem1.decide(request_dict) and local
+Current GitHub 0.1.1.dev4 implements MedSystem1.decide(request_dict) and local
 CLI demo/decide using this wire contract. Immutable wire models and whole-source
 rules/review checks are ported. The HTTP endpoints below remain planned on GitHub;
 historical local dev1 HTTP status is not this branch's acceptance evidence.
-Legacy RouteRequest is a separate advisory API. No model/cloud providers are called.
+Legacy RouteRequest is a separate advisory API. Default has zero provider calls;
+explicit trusted deployment can bind review-only local candidates. No cloud calls exist.
 
 ## Canonical artifacts
 
@@ -87,4 +88,20 @@ for exact configuration, source links, opt-in synthetic smoke and remaining gate
 
 Clinical schemas/v0.1 remain 0.1.0. The new independent administrator contract
 `schemas/deployment/v0.1/local.schema.json` (local-0.1.0) grants no caller fields.
-Canonical decide remains rules-only; no transport/public API truth is duplicated.
+Canonical decide defaults to rules-only; explicit administrator local deployment
+is described below. No transport/public API truth is duplicated.
+
+## Local orchestration slice — 0.1.1.dev4
+
+Default decide/CLI still invoke only rules. An administrator may explicitly bind
+a validated local deployment to the canonical interface. Known facts bypass
+inference; whole-input/urgency review locks prevent every provider call. Only
+low-risk authorized unknown labels receive review-only local candidates.
+Core independently checks pinned identity, task order, probabilities and candidate
+shape; scores never grant calibration, evidence, cloud export or auto approval.
+Model disagreement removes the candidate value/evidence and elevates review.
+See [local orchestration contract](docs/LOCAL_ORCHESTRATION.md).
+
+Clinical wire Schema remains 0.1.0: no new caller fields. contracts.py now rejects
+aggregate route downgrades using blocked > human_review > frontier_fallback >
+abstain > local_auto > rules. This tightens unreleased cross-field validation.

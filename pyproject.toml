@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "medsystem1"
-version = "0.1.1.dev3"
+version = "0.1.1.dev4"
 description = "Local-first safety and routing layer for medical AI"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -38,6 +38,7 @@ packages = ["src/medsystem1"]
 "schemas/v0.1" = "medsystem1/_data/schemas/v0.1"
 "schemas/deployment/v0.1" = "medsystem1/_data/schemas/deployment/v0.1"
 "examples/ophthalmology/request.json" = "medsystem1/_data/examples/ophthalmology/request.json"
+"examples/ophthalmology/local-candidate.request.synthetic.json" = "medsystem1/_data/examples/ophthalmology/local-candidate.request.synthetic.json"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

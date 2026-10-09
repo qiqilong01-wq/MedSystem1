@@ -2,14 +2,14 @@
 
 # Technical specification v0.1
 
-Spec revision 0.1.4 · Schema version 0.1.0 · Runtime target 0.1.0
+Spec revision 0.1.5 · Schema version 0.1.0 · Runtime target 0.1.0
 
-GitHub implementation update (0.1.1.dev3): immutable wire models, request-scoped
+GitHub implementation update (0.1.1.dev4): immutable wire models, request-scoped
 normalization, finite grammar/preflight, rules/review envelope and local CLI are
 ported. The library exposes canonical decide separately from advisory route.
 The pure policy kernel uses str/Enum for Python 3.10 compatibility; its contexts
-are internal trusted state, not HTTP requests. Provider orchestration/HTTP decide API/frontier integration
-and calibration remain pending. Historical local implementation notes below are
+are internal trusted state, not HTTP requests. Conservative review-only local orchestration is implemented; HTTP decide API,
+frontier/calibration and real-provider end-to-end acceptance remain pending. Historical local implementation notes below are
 migration sources; current acceptance is docs/IMPLEMENTATION_STATUS.md.
 
 ## 1. Minimal architecture
@@ -123,3 +123,14 @@ Schema + semantic validators + code behavior 是实现真源；文档冲突要�
 The separate `StrandsHttpProvider` implements the pinned v19 choice wire contract
 behind a trusted local deployment manifest. See [deployment procedure](docs/STRANDS_DEPLOYMENT.md)
 for exact configuration, source links, opt-in synthetic smoke and remaining gates.
+
+## Local orchestration slice — 0.1.1.dev4
+
+Default decide/CLI still invoke only rules. An administrator may explicitly bind
+a validated local deployment to the canonical interface. Known facts bypass
+inference; whole-input/urgency review locks prevent every provider call. Only
+low-risk authorized unknown labels receive review-only local candidates.
+Core independently checks pinned identity, task order, probabilities and candidate
+shape; scores never grant calibration, evidence, cloud export or auto approval.
+Model disagreement removes the candidate value/evidence and elevates review.
+See [local orchestration contract](docs/LOCAL_ORCHESTRATION.md).

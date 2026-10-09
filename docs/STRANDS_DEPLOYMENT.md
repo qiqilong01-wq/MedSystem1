@@ -107,8 +107,9 @@ All provider objects for the same endpoint share a serialization lock in this
 process. Locks coordinate no other processes; keep the supported one-process client
 deployment. No clinical source/state is cached in this client or candidate result.
 
-Canonical MedSystem1.decide and CLI remain rules-only and cannot enable this adapter
-from clinical text. Full M3 orchestration, HTTP decide API, post-validation and
-calibration eligibility are separate work. M2 still requires actual artifact/base
+Default MedSystem1.decide and CLI remain rules-only. An explicit administrator
+deployment argument can now bind review-only local candidates under the M3 gates
+in LOCAL_ORCHESTRATION.md. Clinical text cannot enable it. HTTP decide API, frontier,
+calibration eligibility and real end-to-end acceptance remain separate work. M2 still requires actual artifact/base
 verification, runtime lock/license inventory, and at least ten real synthetic
 requests with observed results. Mock servers and runner mocks cannot close that gate.

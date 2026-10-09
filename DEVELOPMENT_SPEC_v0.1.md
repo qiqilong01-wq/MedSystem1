@@ -2,12 +2,12 @@
 
 # Development specification v0.1
 
-Spec revision 0.1.4 · Coding Agent execution contract · 2026-10-07
+Spec revision 0.1.5 · Coding Agent execution contract · 2026-10-07
 
-GitHub development update: the original M0–M6 scope remains. 0.1.1.dev3 ports
+GitHub development update: the original M0–M6 scope remains. 0.1.1.dev4 includes
 immutable wire models and finite M1 rules/Patient State, adds canonical decide/CLI,
-and preserves review-only legacy model routing. Next implement real Strands and
-full provider/HTTP orchestration under the same boundaries. Current acceptance
+and preserves review-only legacy model routing. Conservative local orchestration
+is connected; real Strands acceptance and HTTP/frontier/calibration remain pending. Current acceptance
 and remaining gates are in docs/IMPLEMENTATION_STATUS.md; historical local dev1
 completion below does not imply GitHub provider or clinical acceptance.
 
@@ -82,3 +82,14 @@ Product DoD 逐条有证据链接。记录精确依赖版本、adapter / model /
 The separate `StrandsHttpProvider` implements the pinned v19 choice wire contract
 behind a trusted local deployment manifest. See [deployment procedure](docs/STRANDS_DEPLOYMENT.md)
 for exact configuration, source links, opt-in synthetic smoke and remaining gates.
+
+## Local orchestration slice — 0.1.1.dev4
+
+Default decide/CLI still invoke only rules. An administrator may explicitly bind
+a validated local deployment to the canonical interface. Known facts bypass
+inference; whole-input/urgency review locks prevent every provider call. Only
+low-risk authorized unknown labels receive review-only local candidates.
+Core independently checks pinned identity, task order, probabilities and candidate
+shape; scores never grant calibration, evidence, cloud export or auto approval.
+Model disagreement removes the candidate value/evidence and elevates review.
+See [local orchestration contract](docs/LOCAL_ORCHESTRATION.md).

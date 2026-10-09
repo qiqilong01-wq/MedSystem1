@@ -4,6 +4,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 from pathlib import Path
 import shutil
+import subprocess
 import sys
 import tempfile
 import threading
@@ -272,6 +273,63 @@ class StrandsHttpTests(unittest.TestCase):
         with patch('socket.socket', side_effect=AssertionError('network forbidden')):
             result = MedSystem1().decide(request)
         self.assertTrue(result['review_required'])
+        self.assertEqual(self.server.calls, [])
+
+    def low_unknown_request(self):
+        request = json.loads((ROOT/'examples/ophthalmology/request.json').read_text(encoding='utf-8'))
+        request['patient_state']['sources'][0]['text'] = '患者右眼模糊三个月。'
+        request['patient_state']['facts'] = []
+        request['tasks'] = ['laterality', 'photopsia']
+        request['cloud_fallback_requested'] = False
+        self.server.payload['answers'] = {'photopsia': {'type': 'choice', 'choice': 'unknown',
+            'probabilities': {'present': 0., 'absent': 0., 'unknown': 1., 'conflicting': 0.},
+            'confidence': 1.}}
+        return request
+
+    def test_opt_in_facade_end_to_end_binds_manifest_and_returns_review(self):
+        request = self.low_unknown_request()
+        system = MedSystem1(project_root=self.root, deployment_path=self.path)
+        result = system.decide(request)
+        self.assertEqual(result['route'], 'human_review')
+        self.assertEqual(result['results'][0]['route'], 'rules')
+        self.assertEqual(result['results'][1]['value'], 'unknown')
+        self.assertEqual(result['results'][1]['confidence']['native_score'], 1.)
+        self.assertEqual(result['versions']['model_revision'], 'b'*40)
+        self.assertEqual(self.server.calls, [('GET', '/health'), ('POST', '/v1/systemone')])
+        self.cfg['tasks'] = []
+        self.write_config()
+        self.assertTrue(system.decide(request)['review_required'])
+
+    def test_opt_in_cli_stdout_response_stderr_metadata_end_to_end(self):
+        request = self.low_unknown_request()
+        request['patient_state']['sources'][0]['source_id'] = MARKER
+        path = self.root/'synthetic-request.json'
+        path.write_text(json.dumps(request), encoding='utf-8')
+        result = subprocess.run([sys.executable, '-m', 'medsystem1', '--project-root', str(self.root),
+            '--deployment', str(self.path), 'decide', '--input', str(path)],
+            capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        response, metadata = json.loads(result.stdout), json.loads(result.stderr)
+        self.assertTrue(response['review_required'])
+        self.assertEqual(metadata['route'], 'human_review')
+        self.assertNotIn(MARKER, result.stderr)
+        self.assertEqual(response['results'][1]['evidence'][0]['source_id'], MARKER)
+
+    def test_opt_in_invalid_manifest_fails_before_any_network(self):
+        self.cfg['base_revision'] = 'd'*40
+        self.write_config()
+        with self.assertRaisesRegex(BoundedProviderError, '^capability_missing$'):
+            MedSystem1(project_root=self.root, deployment_path=self.path)
+        self.assertEqual(self.server.calls, [])
+
+    def test_opt_in_urgency_and_whole_source_guard_stop_health_probe(self):
+        request = self.low_unknown_request()
+        system = MedSystem1(project_root=self.root, deployment_path=self.path)
+        request['tasks'].append('urgency_to_review')
+        self.assertTrue(system.decide(request)['review_required'])
+        request['tasks'].remove('urgency_to_review')
+        request['patient_state']['sources'].append({'source_id': 's2', 'kind': 'synthetic', 'text': '患者有闪光。'})
+        self.assertTrue(system.decide(request)['review_required'])
         self.assertEqual(self.server.calls, [])
 
 
