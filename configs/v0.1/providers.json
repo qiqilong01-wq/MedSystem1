@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1.0",
-  "registry_version": "providers-0.1.0",
+  "registry_version": "providers-0.1.1",
   "strands": {
     "model_id": "StrandsAgents/strands-decider-2B-hobson-v19",
     "code_revision": "890947e7ccd44c3de4115e26a7f46cc5c3147b44",
@@ -9,12 +9,14 @@
     "base_revision": null,
     "deployment_verified": false,
     "calibration_artifacts": [],
-    "capabilities_granted": []
+    "capabilities_granted": [],
+    "reported_base_revision": "b1485b2fa6dfa1287294f269f5fb618e03d52d7c",
+    "reported_base_revision_note": "Upstream release provenance says inferred at training time, not pinned. Not verified local deployment evidence."
   },
   "future_provider_ids": [
     "laya",
     "local_generative",
     "frontier"
   ],
-  "note": "No capabilities are granted until a trusted deployment and task validation exist. Base SHA unresolved."
+  "note": "No capabilities granted. Reported base SHA is an upstream inference; base_revision stays null until independently verified local artifacts and launch are recorded."
 }

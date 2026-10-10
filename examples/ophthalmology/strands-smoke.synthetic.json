@@ -1,0 +1,66 @@
+{
+  "fixture_version": "strands-smoke-0.1.0",
+  "data_class": "original_synthetic_only",
+  "cases": [
+    {
+      "case_id": "side-left",
+      "task_id": "laterality",
+      "state": "患者左眼模糊三个月，否认闪光和飞蚊。",
+      "expected_label": "left"
+    },
+    {
+      "case_id": "side-right",
+      "task_id": "laterality",
+      "state": "患者右眼模糊三个月，否认闪光和飞蚊。",
+      "expected_label": "right"
+    },
+    {
+      "case_id": "side-both",
+      "task_id": "laterality",
+      "state": "患者双眼模糊三个月，否认闪光和飞蚊。",
+      "expected_label": "bilateral"
+    },
+    {
+      "case_id": "time-recent",
+      "task_id": "temporal_classification",
+      "state": "患者右眼模糊三天，否认闪光和飞蚊。",
+      "expected_label": "recent"
+    },
+    {
+      "case_id": "time-long",
+      "task_id": "temporal_classification",
+      "state": "患者右眼模糊三个月，否认闪光和飞蚊。",
+      "expected_label": "longstanding"
+    },
+    {
+      "case_id": "time-unknown",
+      "task_id": "temporal_classification",
+      "state": "患者右眼模糊，持续时间不清楚。",
+      "expected_label": "unknown"
+    },
+    {
+      "case_id": "photopsia-absent",
+      "task_id": "photopsia",
+      "state": "患者右眼模糊三个月，否认闪光。",
+      "expected_label": "absent"
+    },
+    {
+      "case_id": "photopsia-unknown",
+      "task_id": "photopsia",
+      "state": "患者右眼模糊三个月。",
+      "expected_label": "unknown"
+    },
+    {
+      "case_id": "floaters-absent",
+      "task_id": "floaters",
+      "state": "患者右眼模糊三个月，否认飞蚊。",
+      "expected_label": "absent"
+    },
+    {
+      "case_id": "floaters-unknown",
+      "task_id": "floaters",
+      "state": "患者右眼模糊三个月。",
+      "expected_label": "unknown"
+    }
+  ]
+}

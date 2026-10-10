@@ -1,4 +1,4 @@
-# API migration — 0.1.1.dev2
+# API migration — 0.1.1.dev4
 
 The published v0.1.0 alpha API is preserved at its tag. Main intentionally tightens
 safety behavior; applications must not interpret this as a compatible automation
@@ -43,3 +43,14 @@ it is a policy regression, not clinical accuracy or model performance.
 Six bounded tasks: laterality, temporal_classification, photopsia, floaters,
 missing_fields, urgency_to_review. Legacy extract_iop and clinical-action task
 names remain outside that release allowlist and produce review, never authorization.
+
+## Canonical bounded local provider
+
+See [STRANDS_DEPLOYMENT.md](STRANDS_DEPLOYMENT.md) for the separate pinned HTTP
+adapter and deployment manifest. Legacy callables retain their legacy contract.
+
+## Local orchestration — 0.1.1.dev4
+
+Explicit administrator deployment can bind the pinned local provider to decide
+and CLI. Candidates remain review-only; default has zero calls.
+See [LOCAL_ORCHESTRATION.md](LOCAL_ORCHESTRATION.md) for exact gates and limits.

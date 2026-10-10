@@ -23,5 +23,5 @@ __all__ = [
     "validate_clinical_state",
 ]
 
-__version__ = "0.1.1.dev2"
+__version__ = "0.1.1.dev4"
 

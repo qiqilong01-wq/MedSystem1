@@ -1,0 +1,17 @@
+{
+  "deployment_version": "local-0.1.0",
+  "enabled": false,
+  "verified": false,
+  "endpoint": "http://127.0.0.1:8099",
+  "model_id": "StrandsAgents/strands-decider-2B-hobson-v19",
+  "base_id": "Qwen/Qwen3.5-2B-Base",
+  "expected_model_name": "strands-decider-2B-hobson-v19",
+  "code_revision": null,
+  "model_revision": null,
+  "base_revision": null,
+  "strict_window": true,
+  "prefix_cache": false,
+  "max_concurrency": 1,
+  "tasks": [],
+  "attestation": null
+}

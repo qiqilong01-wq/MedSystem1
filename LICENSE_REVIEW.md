@@ -37,3 +37,16 @@ M2 必须记录 code SHA、model SHA、base SHA、downloaded artifacts checksum�
 本次安装制品 metadata：setuptools 75.8.0、wheel 0.45.1、jsonschema 4.23.0、attrs 26.1.0、referencing 0.37.0、jsonschema-specifications 2025.9.1、rpds-py 2026.6.3 标示 MIT；typing_extensions 4.16.0 标示 PSF-2.0。setuptools / wheel 的顶层 LICENSE 已读取，记录见 docs/verification/dependency-license-inventory.json。依赖按 package installer 单独安装，源码 ZIP 不 bundle 它们。
 
 这些是固定制品的工程许可记录，不是所有 vendored 子组件的完整分发审计。setuptools 的 vendored build 子组件存在其他许可；若未来分发整个 Python 环境或 container，M6 要携带各组件原有 notices / licenses，不得将整个环境误标为 Apache-2.0。库原创内容的 Apache-2.0 许可不变。
+
+## Transport slice recheck — 2026-10-08
+
+Pinned code LICENSE and THIRD_PARTY_NOTICES at 890947e7 were fetched again from
+the official repository. The official v19 release commit bb282d7 was reread:
+LICENSE.md declares Apache-2.0. Qwen base LICENSE page was reread. No new Python
+dependency, inference code, model or training data is distributed in this slice.
+
+The same release provenance reports base SHA b1485b2fa6dfa1287294f269f5fb618e03d52d7c
+as **inferred** at training time; this is not verified deployment identity. The
+registry records it separately and keeps base_revision=null. Raw HF metadata URLs
+were unavailable in this environment; release-diff evidence was used, no weights
+were fetched. Actual snapshot checksums and runtime notices remain M2/M6 gates.

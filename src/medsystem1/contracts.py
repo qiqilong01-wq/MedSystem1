@@ -90,6 +90,10 @@ def validate_response(data: dict, request: dict, schema_dir: Path) -> None:
     status_ranks = {"completed": 0, "abstained": 1, "review_required": 2, "blocked": 3}
     if status_ranks[data["status"]] < status_ranks[expected_status]:
         raise ValueError("aggregate_status_downgrade")
+    route_ranks = {'rules': 0, 'local_auto': 1, 'abstain': 2,
+                   'frontier_fallback': 3, 'human_review': 4, 'blocked': 5}
+    if route_ranks[data['route']] < max(route_ranks[i['route']] for i in data['results']):
+        raise ValueError('aggregate_route_downgrade')
     for item in data["results"]:
         _validate_evidence(item["evidence"], request["patient_state"])
         if item["value"] is not None and item["task_id"] != "missing_fields" and not item["evidence"]:

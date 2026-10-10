@@ -1,6 +1,6 @@
 # Provider contract (unreleased main)
 
-These adapters wrap injected synchronous callables. They do not install or
+The legacy adapters wrap injected synchronous callables. They do not install or
 validate an OpenMed SDK, Strands SDK, model, remote service, or clinical workflow.
 Canonical clinical validation uses jsonschema 4.23.0; core installs no model/SDK.
 Deployment owns permission and clinical state. Provider confidence is advisory;
@@ -99,3 +99,8 @@ failures, malformed state, and provider suggestions at the router boundary.
 Passing fixture-backed tests establishes adapter behavior only; validate a real
 provider separately with versioned synthetic inputs before using it in a clinic.
 
+
+## Canonical bounded local provider
+
+See [STRANDS_DEPLOYMENT.md](STRANDS_DEPLOYMENT.md) for the separate pinned HTTP
+adapter and deployment manifest. Legacy callables retain their legacy contract.

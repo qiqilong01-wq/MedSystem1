@@ -6,6 +6,9 @@ from unittest.mock import patch
 import medsystem1
 from medsystem1 import MedSystem1, RequestModel, ResponseModel
 from medsystem1.core.rules_engine import metadata_event
+from medsystem1.core.local_deployment import load_local_deployment
+from medsystem1.adapters.strands_http import StrandsHttpProvider
+from medsystem1.bounded import BoundedProviderError
 from medsystem1.policy import _resource_root
 
 
@@ -15,6 +18,13 @@ def main():
     root=_resource_root()
     request=json.loads(root.joinpath('examples/ophthalmology/request.json').read_text(encoding='utf-8'))
     with patch('socket.socket',side_effect=AssertionError('network forbidden')):
+        deployment=load_local_deployment(root)
+        assert not deployment.settings['enabled']
+        try:
+            StrandsHttpProvider(deployment)
+            raise AssertionError('disabled provider constructed')
+        except BoundedProviderError as error:
+            assert error.code=='capability_missing'
         system=MedSystem1()
         high=system.decide(request)
         assert high['review_required'] and len(high['results'])==6
@@ -23,6 +33,9 @@ def main():
         request['patient_state']['sources'][0]['text']='患者右眼模糊三个月，否认闪光和飞蚊。'
         low=system.decide(request)
         assert low['route']=='rules' and low['results'][0]['value']=='right'
+        candidate=json.loads(root.joinpath('examples/ophthalmology/local-candidate.request.synthetic.json').read_text(encoding='utf-8'))
+        disabled=MedSystem1(deployment_path=root/'configs/v0.1/local-deployment.disabled.json')
+        assert disabled.decide(candidate)['route']=='rules'
     schema_dir=Path(str(root))/'schemas/v0.1'
     model=RequestModel.from_dict(request,schema_dir)
     assert ResponseModel.from_dict(low,model,schema_dir).to_dict()==low
