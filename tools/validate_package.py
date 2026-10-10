@@ -37,6 +37,11 @@ def main():
     executed=MedSystem1().decide(request)
     validate_response(executed,request,schema_dir)
     assert executed['review_required']
+    candidate_request=json.loads((ROOT/'examples/ophthalmology/local-candidate.request.synthetic.json').read_text(encoding='utf-8'))
+    validate_request(candidate_request,schema_dir)
+    no_provider=MedSystem1().decide(candidate_request)
+    assert no_provider['route']=='rules' and not no_provider['review_required']
+    assert [i['value'] for i in no_provider['results']]==['right','unknown','unknown']
     cases=0
     for line in (ROOT/'benchmarks/smoke.jsonl').read_text(encoding='utf-8').splitlines():
         case=json.loads(line)

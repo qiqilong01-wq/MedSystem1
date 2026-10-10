@@ -33,6 +33,9 @@ def main():
         request['patient_state']['sources'][0]['text']='患者右眼模糊三个月，否认闪光和飞蚊。'
         low=system.decide(request)
         assert low['route']=='rules' and low['results'][0]['value']=='right'
+        candidate=json.loads(root.joinpath('examples/ophthalmology/local-candidate.request.synthetic.json').read_text(encoding='utf-8'))
+        disabled=MedSystem1(deployment_path=root/'configs/v0.1/local-deployment.disabled.json')
+        assert disabled.decide(candidate)['route']=='rules'
     schema_dir=Path(str(root))/'schemas/v0.1'
     model=RequestModel.from_dict(request,schema_dir)
     assert ResponseModel.from_dict(low,model,schema_dir).to_dict()==low

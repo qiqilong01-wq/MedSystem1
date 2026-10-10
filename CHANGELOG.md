@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.1.dev4 — 2026-10-09 (unreleased)
+
+- Bind explicit administrator local deployment to canonical decide/CLI; keep default
+  rules-only, no model auto or cloud calls. Known facts and all review locks skip
+  inference; only authorized low-risk unknown tasks reach one bounded local call.
+- Independently snapshot/validate candidate shape, exact pinned descriptor, task
+  coverage/order, finite probabilities and native confidence consistency.
+- Reject late/invalid/failing provider output into review with fixed redacted codes.
+  Matching unknown labels retain only rule context; disagreements clear value
+  and evidence, raise uncertainty and never add Patient State facts.
+- Include trusted deployment digest in configuration identity and measure local
+  time in core. Strengthen aggregate route validation to forbid review downgrades.
+- Add mock orchestration/CLI-loopback tests and an original synthetic candidate
+  request. Real Strands, HTTP decide API, frontier/calibration/release remain open.
+
 ## 0.1.1.dev3 — 2026-10-08 (unreleased)
 
 - Add separate canonical bounded-provider protocol and pinned v19 loopback HTTP
