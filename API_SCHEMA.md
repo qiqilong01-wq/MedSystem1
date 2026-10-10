@@ -2,7 +2,13 @@
 
 # API schema v0.1
 
-Schema version 0.1.0 · Spec revision 0.1.1
+Schema version 0.1.0 · Spec revision 0.1.3
+
+Current GitHub 0.1.1.dev2 implements MedSystem1.decide(request_dict) and local
+CLI demo/decide using this wire contract. Immutable wire models and whole-source
+rules/review checks are ported. The HTTP endpoints below remain planned on GitHub;
+historical local dev1 HTTP status is not this branch's acceptance evidence.
+Legacy RouteRequest is a separate advisory API. No model/cloud providers are called.
 
 ## Canonical artifacts
 

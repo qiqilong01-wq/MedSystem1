@@ -2,7 +2,14 @@
 
 # Development specification v0.1
 
-Spec revision 0.1.1 · Coding Agent execution contract · 2026-10-03
+Spec revision 0.1.3 · Coding Agent execution contract · 2026-10-07
+
+GitHub development update: the original M0–M6 scope remains. 0.1.1.dev2 ports
+immutable wire models and finite M1 rules/Patient State, adds canonical decide/CLI,
+and preserves review-only legacy model routing. Next implement real Strands and
+full provider/HTTP orchestration under the same boundaries. Current acceptance
+and remaining gates are in docs/IMPLEMENTATION_STATUS.md; historical local dev1
+completion below does not imply GitHub provider or clinical acceptance.
 
 ## Current inventory
 

@@ -21,12 +21,19 @@ def main():
     request=json.loads((ROOT/'examples/ophthalmology/request.json').read_text(encoding='utf-8'))
     response=json.loads((ROOT/'examples/ophthalmology/response.json').read_text(encoding='utf-8'))
     validate_response(response,request,schema_dir)
+    from medsystem1 import MedSystem1
+    executed=MedSystem1().decide(request)
+    validate_response(executed,request,schema_dir)
+    assert executed['review_required']
     cases=0
     for line in (ROOT/'benchmarks/smoke.jsonl').read_text(encoding='utf-8').splitlines():
         case=json.loads(line)
         validate_schema(case,'benchmark-case.schema.json',schema_dir)
         validate_request(case['request'],schema_dir)
         assert set(case['expected_values'])==set(case['request']['tasks'])
+        result=MedSystem1().decide(case['request'])
+        assert {r['task_id']:r['value'] for r in result['results']}==case['expected_values']
+        assert result['review_required']==case['expected_review_required']
         cases+=1
     required=('README.md','PRODUCT_SPEC_v0.1.md','TECH_SPEC_v0.1.md',
               'DEVELOPMENT_SPEC_v0.1.md','API_SCHEMA.md','BENCHMARK_SPEC.md',
